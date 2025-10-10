@@ -16,14 +16,15 @@ const UserSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true,
+        required: false,
     },
     cpf: {
         type: String,
-        required: true,
+        required: false,
     },
     status_pagamento: {
         type: Boolean,
+        default: "false",
         required: true,
     },
     plan: {
