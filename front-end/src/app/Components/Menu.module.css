@@ -1,0 +1,46 @@
+.menu {
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--bg-dark);
+}
+
+.menu svg {
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    font-family: "Marcellus";
+    color: #e7e7e7;
+    font-weight: 700;
+}
+
+.links {
+    display: flex;
+    column-gap: 3rem;
+    align-items: center;
+    color: #e7e7e7;
+    font-family: "Playfair";
+    font-size: 16px;
+}
+
+.suporte {
+    display: flex;
+    align-items: center;
+}
+
+
+.suporte button {
+    width: 7rem;
+    height: 1.8rem;
+    border-radius: 14px;
+    border: 1px solid #e7e7e7;
+    background-color: rgba(240, 248, 255, 0);
+    color: #e7e7e7;
+    font-family: "Marcellus";
+}
