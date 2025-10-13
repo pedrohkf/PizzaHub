@@ -31,9 +31,16 @@ export default async function login(formData: FormData) {
             maxAge: 60 * 60 * 24
         });
     } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            return {
+                success: false,
+                message: error.response.data.message || 'Erro ao fazer login.',
+            }
+        }
+
         return {
             success: false,
-            message: error + "Erro ao fazer login"
+            message: 'Erro inesperado. Tente novamente mais tarde.',
         }
     }
 

@@ -26,6 +26,8 @@ export default function LoginForm({ onSwitch }: { onSwitch: () => void }) {
     const handleSubmit = async (formData: FormData) => {
         const email = formData.get('email') as string;
         const password = formData.get('password') as string;
+        const result = await register(formData);
+
 
         if (!email) {
             setError('O campo email é obrigatório.');
@@ -35,6 +37,12 @@ export default function LoginForm({ onSwitch }: { onSwitch: () => void }) {
         if (!password) {
             setError('O campo senha é obrigatório.');
             return
+        }
+
+        if (!result.success) {
+            setError(result.message);
+            setTimeout(() => setError(""), 5000); 
+            return;
         }
 
         await register(formData);
