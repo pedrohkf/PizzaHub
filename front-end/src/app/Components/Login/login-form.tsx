@@ -14,7 +14,7 @@ function FormButton() {
             {pending ? (
                 <Button disabled={pending}>Entrando...</Button>
             ) : (
-                <Button>Entrar</Button>
+                <Button onClick={() => redirect('pizzahub/dashboard')}>Entrar</Button>
             )}
         </div>
     );
@@ -25,9 +25,9 @@ export default function LoginForm({ onSwitch }: { onSwitch: () => void }) {
 
     const handleSubmit = async (formData: FormData) => {
         setError(undefined);
-
         const email = formData.get('email') as string;
         const password = formData.get('password') as string;
+        const result = await login(formData);
 
         if (!email) {
             setError('O campo email é obrigatório.');
@@ -37,6 +37,12 @@ export default function LoginForm({ onSwitch }: { onSwitch: () => void }) {
         if (!password) {
             setError('O campo senha é obrigatório.');
             return
+        }
+
+        if (!result.success) {
+            setError(result.message);
+            setTimeout(() => setError(""), 5000); 
+            return;
         }
 
         await login(formData);
@@ -57,12 +63,12 @@ export default function LoginForm({ onSwitch }: { onSwitch: () => void }) {
             <div className={styles.inputs}>
                 <div>
                     <p>Email</p>
-                    <input type="email" name="email" placeholder="Insira seu email"
+                    <input type="email" name="email" placeholder="Insira seu email" required
                     />
                 </div>
                 <div>
                     <p>Senha</p>
-                    <input type="password" name="password" placeholder="Insira sua senha"
+                    <input type="password" name="password" placeholder="Insira sua senha" required
                     />
                 </div>
                 <p className={styles.errorMessage}>{error}</p>

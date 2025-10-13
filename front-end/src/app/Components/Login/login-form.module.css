@@ -82,9 +82,11 @@
 
 .errorMessage {
     color: rgb(252, 113, 113);
-    font-size: 12px;
+    font-size: 16px;
+    font-family: "Marcellus";
     margin-top: 0.5rem;
     text-align: center;
+    font-weight: 600;
 }
 
 

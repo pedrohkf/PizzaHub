@@ -22,6 +22,9 @@ export default async function register(formData: FormData) {
 
         const data = response.data;
 
+        return { success: true, data: response.data };
+
+
         return data;
 
     } catch (error) {

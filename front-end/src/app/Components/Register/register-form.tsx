@@ -41,7 +41,7 @@ export default function LoginForm({ onSwitch }: { onSwitch: () => void }) {
 
         if (!result.success) {
             setError(result.message);
-            setTimeout(() => setError(""), 5000); 
+            setTimeout(() => setError(""), 7000); 
             return;
         }
 

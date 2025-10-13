@@ -30,6 +30,9 @@ export default async function login(formData: FormData) {
             sameSite: 'lax',
             maxAge: 60 * 60 * 24
         });
+
+        return { success: true, data: response.data };
+
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
             return {
