@@ -4,7 +4,7 @@
     align-items: center;
     height: 100vh;
     overflow: hidden;
-    background-color: #00000069;
+    background-color: #383838;
 }
 
 .backgroundContent {
@@ -20,8 +20,8 @@
 
 .content {
     display: flex;
-    width: 60%;
-    height: 75%;
+    width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
 }
@@ -34,72 +34,85 @@
 
 .formLogin {
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: 75%;
+    height: 90%;
     justify-content: center;
     align-items: center;
     background-size: cover;
     background-position: center;
-    border-radius: 15px;
 }
 
 .formRegister {
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: 75%;
+    height: 90%;
     justify-content: center;
     align-items: center;
     background-size: cover;
     background-position: center;
-    border-radius: 15px;
 }
 
 .backgroundImg {
     width: 50%;
     height: 100%;
+    background-image: url("../../../public/imgs/maos.jpg");
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px 0 0 10px;
+    z-index: 1;
+}
+
+.filter{
     display: flex;
     align-items: end;
     justify-content: center;
-    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.322);
+    border-radius: 10px 0 0 10px;
+
 }
 
 .rights {
-    width: 80%;
-    height: 15%;
+    width: 75%;
+    height: 35%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border-radius: 12px;
-    margin-bottom: 2rem;
-    color: #ffffffce;
-    border: 2px solid rgba(255, 255, 255, 0.35);
-    background-image: linear-gradient(10deg, #ffffff75, #ffffff1c, #B5B3B320, #A2A1A120);
-    backdrop-filter: blur(10);
-    box-shadow: inset 0 0 8px 1px rgba(255, 255, 255, 0.2),
-        0 0 10px rgba(255, 255, 255, 0.1);
-    z-index: 1;
+    flex-direction: column;
+    color: #ffffff;
+    row-gap: 2rem;
 }
 
-.cardGlass {
-    width: 100%;
-    height: 10%;
-    backdrop-filter: blur(var(--blur));
-    -webkit-backdrop-filter: blur(var(--blur));
-    background-image: linear-gradient(90deg, var(--white200), var(--white50));
-    color: transparent;
-    top: calc(var(--move-by) * -1);
-    left: var(--move-by);
-    position: absolute;
+.rights h3 {
+    font-size: 40px;
+    font-family: "Playfair";
 }
 
-.backgroundImg p {
-    font-size: 12px;
+.rights p {
+    font-size: 18px;
+    font-family: "Marcellus";
+}
+
+.details {
+    display: flex;
+    column-gap: 0.4rem;
+}
+
+.details div {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: white;
+}
+
+#detailOne {
+    width: 2.5rem;
+    border-radius: 10px;
+    background-color: rgb(235, 235, 235);
 }
 
 
-@media (max-width: 650px) {
-    .formLogin {
+@media (max-width: 1500px) {
+    .formRegister {
         display: flex;
         flex-direction: column;
         align-items: center;

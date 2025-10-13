@@ -16,7 +16,8 @@ export default function Menu(){
                 <p>Sobre nós</p>
             </div>
             <div className={styles.suporte}>
-                <button>Contato</button>
+                <a href="/auth"><button>Entrar</button></a>
+                <a href="/auth"><button>Começar</button></a>
             </div>
         </div>
     )

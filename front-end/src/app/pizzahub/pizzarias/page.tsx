@@ -1,11 +1,11 @@
 "use client";
-import SideMenu from "@/app/Components/SideMenu/SideMenu";
 import React, { useState } from "react";
 
 export default function Page() {
+
     return (
         <div>
-            <SideMenu />
+            Pizzas
         </div>
     )
 }              

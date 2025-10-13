@@ -47,7 +47,7 @@ export default function LoginForm({ onSwitch }: { onSwitch: () => void }) {
     return (
         <form className={styles.formLogin} action={handleSubmit}>
             <div className={styles.title}>
-                <p>Que bom ver você de novo!</p>
+                <h2>Que bom ver você de novo!</h2>
             </div>
 
             <div className={styles.selection}>
@@ -56,10 +56,12 @@ export default function LoginForm({ onSwitch }: { onSwitch: () => void }) {
             </div>
             <div className={styles.inputs}>
                 <div>
+                    <p>Email</p>
                     <input type="email" name="email" placeholder="Insira seu email"
                     />
                 </div>
                 <div>
+                    <p>Senha</p>
                     <input type="password" name="password" placeholder="Insira sua senha"
                     />
                 </div>
