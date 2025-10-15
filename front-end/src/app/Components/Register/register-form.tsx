@@ -14,7 +14,7 @@ function FormButton() {
             {pending ? (
                 <Button disabled={pending}>Enviando...</Button>
             ) : (
-                <Button onClick={() => redirect('pizzahub/dashboard')}>Entrar</Button>
+                <Button onClick={() => redirect('pizzahub/dashboard')}>Cadastrar</Button>
             )}
         </div>
     );
