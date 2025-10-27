@@ -1,80 +1,37 @@
 'use client';
-import login from "@/app/actions/login";
-import Button from "@/app/Components/Forms/button";
-import styles from "./login-form.module.css"
-import { useFormStatus } from "react-dom";
-import { redirect } from "next/navigation";
 import { useState } from "react";
-
-function FormButton() {
-    const { pending } = useFormStatus();
-
-    return (
-        <div className={styles.buttons}>
-            {pending ? (
-                <Button disabled={pending}>Entrando...</Button>
-            ) : (
-                <Button onClick={() => redirect('pizzahub/dashboard')}>Entrar</Button>
-            )}
-        </div>
-    );
-}
+import loginAction from "@/app/actions/login";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm({ onSwitch }: { onSwitch: () => void }) {
-    const [error, setError] = useState<string>();
+  const { login: setUser } = useAuth();
+  const router = useRouter();
+  const [error, setError] = useState<string>();
 
-    const handleSubmit = async (formData: FormData) => {
-        setError(undefined);
-        const email = formData.get('email') as string;
-        const password = formData.get('password') as string;
-        const result = await login(formData);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(undefined);
 
-        if (!email) {
-            setError('O campo email é obrigatório.');
-            return
-        }
+    const formData = new FormData(e.currentTarget);
+    const result = await loginAction(formData);
 
-        if (!password) {
-            setError('O campo senha é obrigatório.');
-            return
-        }
-
-        if (!result.success) {
-            setError(result.message);
-            setTimeout(() => setError(""), 5000); 
-            return;
-        }
-
-        await login(formData);
-
-        redirect('pizzahub/dashboard')
+    if (!result.success || !result.data) {
+      setError(result.message || "Erro ao fazer login");
+      return;
     }
 
-    return (
-        <form className={styles.formLogin} action={handleSubmit}>
-            <div className={styles.title}>
-                <h2>Que bom ver você de novo!</h2>
-            </div>
+    setUser(result.data);
+    router.push("/pizzahub/dashboard");
+  };
 
-            <div className={styles.selection}>
-                <button className={styles.btnActived}>Entrar</button>
-                <button onClick={onSwitch}>Cadastrar</button>
-            </div>
-            <div className={styles.inputs}>
-                <div>
-                    <p>Email</p>
-                    <input type="email" name="email" placeholder="Insira seu email" required
-                    />
-                </div>
-                <div>
-                    <p>Senha</p>
-                    <input type="password" name="password" placeholder="Insira sua senha" required
-                    />
-                </div>
-                <p className={styles.errorMessage}>{error}</p>
-            </div>
-
-            <FormButton />
-        </form>
-    )
+  return (
+    <form onSubmit={handleSubmit}>
+      <input name="email" type="email" placeholder="Email" required />
+      <input name="password" type="password" placeholder="Senha" required />
+      <button type="submit">Entrar</button>
+      <button type="button" onClick={onSwitch}>Cadastrar</button>
+      {error && <p>{error}</p>}
+    </form>
+  );
 }

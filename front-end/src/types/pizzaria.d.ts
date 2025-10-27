@@ -8,4 +8,5 @@ export interface PizzariaFormData {
   state: string;
   deliveryFee: string;
   methodPay: string;
+  userId: string;
 }

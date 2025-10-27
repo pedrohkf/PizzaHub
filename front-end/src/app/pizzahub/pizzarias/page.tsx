@@ -9,7 +9,7 @@ export default function Page() {
         <div className={styles.container}>
             <SideMenu />
             <div className={styles.newBlog}>
-                    <Link href='pizzarias/addPizzaria'>+ BLOG</Link>
+                    <Link href='pizzarias/create'>+ BLOG</Link>
                 </div>
         </div>
     )
