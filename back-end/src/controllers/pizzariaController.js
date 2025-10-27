@@ -13,12 +13,12 @@ exports.updatePizzaria = async (req, res) => {
 };
 
 exports.getPizzarias = async (req, res) => {
-  const pizzarias = await Pizzaria.find().populate("menuId userId");
+  const pizzarias = await Pizzaria.find().populate("userId");
   res.json(pizzarias);
 };
 
 exports.getPizzariaById = async (req, res) => {
   const { id } = req.params;
-  const pizzaria = await Pizzaria.findById(id).populate("menuId userId");
+  const pizzaria = await Pizzaria.findById(id).populate("userId");
   res.json(pizzaria);
 };

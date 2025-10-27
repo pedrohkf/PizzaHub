@@ -28,7 +28,6 @@ const PizzariaSchema = new mongoose.Schema({
   },
 
   userId: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  menuId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Menu" }],
 
   createAt: { type: Date, default: Date.now },
 });
