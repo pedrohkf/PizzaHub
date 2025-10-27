@@ -21,7 +21,7 @@ export default async function login(formData: FormData) {
         token: data.token,
       },
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {
       return { success: false, message: error.response.data.message || "Erro ao fazer login." };
     }

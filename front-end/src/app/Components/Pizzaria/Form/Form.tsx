@@ -27,8 +27,8 @@ export default function PizzariaForm() {
       await postPizzaria(formData, user.id);
       alert("Pizzaria criada com sucesso!");
       setFormData({ name: "", phone: "", openingHours: "", numberHouse: "", street: "", neighborhood: "", state: "", deliveryFee: "", methodPay: "dinheiro", userId: "" });
-    } catch (error: any) {
-      alert(error.message || "Erro ao criar pizzaria.");
+    } catch (error: unknown) {
+      console.error(error || "Erro ao criar pizzaria.");
     } finally {
       setLoading(false);
     }
