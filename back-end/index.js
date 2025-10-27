@@ -10,6 +10,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use('/auth', authRoutes);
+app.use("/api/pizzarias", pizzariaRoutes);
 
 
 app.get("/", (req, res) => {
