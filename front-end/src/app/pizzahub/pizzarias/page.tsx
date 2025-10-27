@@ -1,11 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import SideMenu from "@/app/Components/SideMenu/SideMenu";
+import styles from "./pizzarias.module.css"
+import Link from "next/link";
 
 export default function Page() {
 
     return (
-        <div>
-            Pizzas
+        <div className={styles.container}>
+            <SideMenu />
+            <div className={styles.newBlog}>
+                    <Link href='pizzarias/addPizzaria'>+ BLOG</Link>
+                </div>
         </div>
     )
 }              
