@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const PizzariaSchema = new mongoose.Schema({
-  name: { type: String, required: false },
+  name: { type: String, required: true },
   phone: { type: String, required: true },
   openingHours: { type: String, required: true },
   numberHouse: { type: String, required: true },
-  street: { type: String, required: false },
+  street: { type: String, required: true },
   neighborhood: { type: String, required: true },
   state: { type: String, required: true },
   deliveryFee: { type: String, required: true },
