@@ -15,16 +15,16 @@ const PizzariaSchema = new mongoose.Schema({
     required: true,
   },
 
-  logo: { type: String },
-  bannerImage: { type: String },
-  gallery: [{ type: String }],
-  slogan: { type: String },
-  description: { type: String },
+  logo: { type: String, default: "" },
+  bannerImage: { type: String, default: "" },
+  gallery: { type: [String], default: [] },
+  slogan: { type: String, default: "" },
+  description: { type: String, default: "" },
 
   socialLinks: {
-    instagram: { type: String },
-    whatsapp: { type: String },
-    website: { type: String },
+    instagram: { type: String, default: "" },
+    whatsapp: { type: String, default: "" },
+    website: { type: String, default: "" },
   },
 
   userId: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
