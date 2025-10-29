@@ -145,9 +145,11 @@
 }
 
 .galleryGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  max-width: 1200px;
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  column-gap: 3rem;
+  width: 90%;
   margin: auto;
 }
 

@@ -54,6 +54,16 @@ export default function EditPage() {
       const res = await fetch(`https://pizza-hub-lime.vercel.app/api/pizzarias/get/${id}`);
       const data = await res.json();
       setPizzaria(data);
+
+      // ⚡ Atualiza os campos do live preview
+      setLogo(data.logo || "");
+      setBannerImage(data.bannerImage || "");
+      setSlogan(data.slogan || "");
+      setDescription(data.description || "");
+      setGallery(data.gallery || []);
+      setInstagram(data.socialLinks?.instagram || "");
+      setWhatsapp(data.socialLinks?.whatsapp || "");
+      setWebsite(data.socialLinks?.website || "");
     }
     fetchPizzaria();
   }, [id]);
