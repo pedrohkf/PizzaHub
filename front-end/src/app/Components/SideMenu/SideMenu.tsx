@@ -41,11 +41,6 @@ export default function SideMenu() {
             </div>
 
             <div className={isSmallScreen ? styles.menuLayoutDesactived : styles.menuLayout}>
-
-                <h2 data-text="Awesome">
-                    <span className="actual-text">&nbsp;BIT.AI&nbsp;</span>
-                    <span aria-hidden="true" className={styles.hoverText}>&nbsp;BIT.AI&nbsp;</span>
-                </h2>
                 <ul className={styles.menu}>
                     {menuItems.map((item) => (
                         <li
