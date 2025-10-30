@@ -18,8 +18,9 @@ const CardapioSchema = new mongoose.Schema({
       ],
     },
   ],
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   ultimaAtualizacao: { type: Date, default: Date.now },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 });
+
 
 module.exports = mongoose.model("Cardapio", CardapioSchema);

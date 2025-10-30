@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import styles from "./edit.module.css";
+import CardapioForm from "@/app/Components/Pizzaria/Cardapio-Form/cardapio";
 
 interface Pizzaria {
   name: string;
@@ -136,6 +137,8 @@ export default function EditPage() {
         <button onClick={handleSave} className={styles.saveBtn}>
           Salvar alterações
         </button>
+
+        <CardapioForm />
       </section>
 
       {/* PREVIEW VISUAL DO SITE */}
