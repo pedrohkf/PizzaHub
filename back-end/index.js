@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require('cors');
 const authRoutes = require('./src/routes/authRoutes');
 const pizzariaRoutes = require('./src/routes/pizzariaRoutes');
+const cardapioRoutes = require('./src/routes/cardapioRoutes');
 
 require('dotenv').config();
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/auth', authRoutes);
 app.use("/api/pizzarias", pizzariaRoutes);
+app.use("/api/cardapio", cardapioRoutes)
 
 
 app.get("/", (req, res) => {
