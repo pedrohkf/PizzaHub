@@ -141,7 +141,6 @@ export default function EditPage() {
         <CardapioForm />
       </section>
 
-      {/* PREVIEW VISUAL DO SITE */}
       <section className={styles.previewSection}>
         <header className={styles.header}>
           <div className={styles.logoMenu}>

@@ -28,6 +28,8 @@ interface Cardapio {
 export default function CardapioForm() {
     const [cardapio, setCardapio] = useState<Cardapio>({ categorias: [] });
     const [loading, setLoading] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+
     const { user } = useAuth();
 
 
@@ -90,48 +92,67 @@ export default function CardapioForm() {
         }
     }
 
+    function abrirModal() {
+        setIsOpen(true);
+    }
+
+    function fecharModal() {
+        setIsOpen(false);
+    }
+
 
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit}>
-            <h2>Cardápio</h2>
-            {cardapio.categorias.map((cat, cIndex) => (
-                <div key={cIndex} className={styles.categoria}>
-                    <input
-                        placeholder="Nome da categoria"
-                        value={cat.nome}
-                        onChange={(e) => alterarNomeCategoria(cIndex, e.target.value)}
-                    />
-                    {cat.pizzas.map((pizza, pIndex) => (
-                        <div key={pIndex} className={styles.pizza}>
-                            <input
-                                placeholder="Nome da pizza"
-                                value={pizza.nome}
-                                onChange={(e) =>
-                                    alterarPizza(cIndex, pIndex, "nome", e.target.value)
-                                }
-                            />
-                            <input
-                                placeholder="Preço pequena"
-                                type="number"
-                                value={pizza.precoPequena}
-                                onChange={(e) =>
-                                    alterarPizza(cIndex, pIndex, "precoPequena", Number(e.target.value))
-                                }
-                            />
-                        </div>
-                    ))}
-                    <button type="button" onClick={() => adicionarPizza(cIndex)}>
-                        Adicionar Pizza
-                    </button>
+        <>
+            <button onClick={abrirModal}>Adicionar Cardápio</button>
+
+            {isOpen && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <button className={styles.closeButton} onClick={fecharModal}>×</button>
+                        <form className={styles.form} onSubmit={handleSubmit}>
+                            <h2>Cardápio</h2>
+                            {cardapio.categorias.map((cat, cIndex) => (
+                                <div key={cIndex} className={styles.categoria}>
+                                    <input
+                                        placeholder="Nome da categoria"
+                                        value={cat.nome}
+                                        onChange={(e) => alterarNomeCategoria(cIndex, e.target.value)}
+                                    />
+                                    {cat.pizzas.map((pizza, pIndex) => (
+                                        <div key={pIndex} className={styles.pizza}>
+                                            <input
+                                                placeholder="Nome da pizza"
+                                                value={pizza.nome}
+                                                onChange={(e) =>
+                                                    alterarPizza(cIndex, pIndex, "nome", e.target.value)
+                                                }
+                                            />
+                                            <input
+                                                placeholder="Preço pequena"
+                                                type="number"
+                                                value={pizza.precoPequena}
+                                                onChange={(e) =>
+                                                    alterarPizza(cIndex, pIndex, "precoPequena", Number(e.target.value))
+                                                }
+                                            />
+                                        </div>
+                                    ))}
+                                    <button type="button" onClick={() => adicionarPizza(cIndex)}>
+                                        Adicionar Pizza
+                                    </button>
+                                </div>
+                            ))}
+                            <button type="button" onClick={adicionarCategoria}>
+                                Adicionar Categoria
+                            </button>
+                            <button type="submit" disabled={loading}>
+                                {loading ? "Enviando..." : "Salvar Cardápio"}
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            ))}
-            <button type="button" onClick={adicionarCategoria}>
-                Adicionar Categoria
-            </button>
-            <button type="submit" disabled={loading}>
-                {loading ? "Enviando..." : "Salvar Cardápio"}
-            </button>
-        </form>
+            )}
+        </>
     );
 }
