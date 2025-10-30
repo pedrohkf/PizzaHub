@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const CardapioSchema = new mongoose.Schema({
-  pizzariaId: { type: mongoose.Schema.Types.ObjectId, ref: "Pizzaria", required: true },
   categorias: [
     {
       nome: String,
@@ -21,5 +20,6 @@ const CardapioSchema = new mongoose.Schema({
   ],
   ultimaAtualizacao: { type: Date, default: Date.now },
 });
+
 
 module.exports = mongoose.model("Cardapio", CardapioSchema);
