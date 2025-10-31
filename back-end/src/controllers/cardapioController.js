@@ -4,11 +4,6 @@ exports.criarCardapio = async (req, res) => {
   try {
     const { userId, categorias } = req.body;
 
-    const cardapioExistente = await Cardapio.findOne({ userId });
-    if (cardapioExistente) {
-      return res.status(400).json({ message: "Este usuário já possui um cardápio." });
-    }
-
     const novoCardapio = new Cardapio({ userId, categorias });
     await novoCardapio.save();
 

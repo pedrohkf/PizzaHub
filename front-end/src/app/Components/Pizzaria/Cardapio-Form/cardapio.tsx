@@ -81,7 +81,7 @@ export default function CardapioForm() {
                 return;
             }
 
-            await postCardapio(cardapio, user.id); // passa o ID do usuário logado
+            await postCardapio(cardapio, user.id);
             alert("Cardápio criado com sucesso!");
             setCardapio({ categorias: [] });
         } catch (error) {
@@ -104,9 +104,7 @@ export default function CardapioForm() {
 
     return (
         <>
-            <button onClick={abrirModal}>Adicionar Cardápio</button>
-
-            {isOpen && (
+            {isOpen ? (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent}>
                         <button className={styles.closeButton} onClick={fecharModal}>×</button>
@@ -152,7 +150,7 @@ export default function CardapioForm() {
                         </form>
                     </div>
                 </div>
-            )}
+            ) : (<button onClick={abrirModal}>Adicionar Cardápio</button>)}
         </>
     );
 }
