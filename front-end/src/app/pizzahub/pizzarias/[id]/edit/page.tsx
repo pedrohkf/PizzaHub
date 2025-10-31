@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import styles from "./edit.module.css";
 import CardapioForm from "@/app/Components/Pizzaria/Cardapio-Form/cardapio";
+import { useAuth } from "@/context/AuthContext";
 
 interface Pizza {
   nome: string;
@@ -55,6 +56,8 @@ export default function EditPage() {
   const params = useParams();
   const id = params?.id;
 
+  const { user } = useAuth();
+
   const [pizzaria, setPizzaria] = useState<Pizzaria | null>(null);
 
   const [logo, setLogo] = useState("");
@@ -92,16 +95,17 @@ export default function EditPage() {
     fetchPizzaria();
   }, [id]);
 
-  // Pega todos os cardápios do usuário
   useEffect(() => {
     async function fetchUserCardapios() {
-      const res = await fetch(`https://pizza-hub-lime.vercel.app/api/cardapios`);
+      if (!user?.id) return; 
+
+      const res = await fetch(`https://pizza-hub-lime.vercel.app/api/cardapio/${user.id}`);
       const data = await res.json();
       setUserCardapios(data);
     }
 
     fetchUserCardapios();
-  }, []);
+  }, [user?.id]);
 
   async function handleSave() {
     if (!pizzaria) return;

@@ -19,7 +19,7 @@ exports.obterCardapio = async (req, res) => {
     const { userId } = req.params;
     const numericUserId = Number(userId);
 
-    const cardapio = await Cardapio.findOne({ userID: numericUserId });
+    const cardapio = await Cardapio.find({ userID: numericUserId });
 
     if (!cardapio) {
       return res.status(404).json({ message: "Cardápio não encontrado." });
