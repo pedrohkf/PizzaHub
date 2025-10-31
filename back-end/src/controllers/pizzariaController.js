@@ -6,10 +6,20 @@ exports.createPizzaria = async (req, res) => {
   res.status(201).json(pizzaria);
 };
 
-exports.updatePizzaria = async (req, res) => {
-  const { id } = req.params;
-  const updated = await Pizzaria.findByIdAndUpdate(id, req.body, { new: true });
-  res.json(updated);
+export const updatePizzaria = async (req, res) => {
+  try {
+    const { cardapioId, ...rest } = req.body;
+
+    const updateData = { ...rest };
+    if (cardapioId) updateData.cardapioId = new mongoose.Types.ObjectId(cardapioId);
+
+    const updated = await Pizzaria.findByIdAndUpdate(req.params.id, updateData, { new: true });
+
+    res.status(200).json(updated);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao atualizar pizzaria" });
+  }
 };
 
 exports.getPizzarias = async (req, res) => {

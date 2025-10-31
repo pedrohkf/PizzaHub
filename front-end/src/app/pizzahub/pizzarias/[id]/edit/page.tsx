@@ -25,7 +25,7 @@ interface Categoria {
 interface Cardapio {
   _id?: string;
   categorias: Categoria[];
-  nome?: string; // opcional, caso queira nomear o cardápio
+  nome?: string;
 }
 
 interface Pizzaria {
@@ -48,7 +48,7 @@ interface Pizzaria {
     whatsapp: string;
     website: string;
   };
-  cardapioId?: string; // para salvar o cardápio selecionado
+  cardapioId?: string;
 }
 
 export default function EditPage() {
@@ -59,7 +59,6 @@ export default function EditPage() {
   const { user } = useAuth();
 
   const [pizzaria, setPizzaria] = useState<Pizzaria | null>(null);
-
   const [logo, setLogo] = useState("");
   const [bannerImage, setBannerImage] = useState("");
   const [slogan, setSlogan] = useState("");
@@ -68,19 +67,16 @@ export default function EditPage() {
   const [instagram, setInstagram] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [website, setWebsite] = useState("");
-
   const [userCardapios, setUserCardapios] = useState<Cardapio[]>([]);
   const [selectedCardapioId, setSelectedCardapioId] = useState<string | null>(null);
 
-  // Pega pizzaria existente
+  // Buscar pizzaria
   useEffect(() => {
     if (!id) return;
-
     async function fetchPizzaria() {
       const res = await fetch(`https://pizza-hub-lime.vercel.app/api/pizzarias/get/${id}`);
       const data = await res.json();
       setPizzaria(data);
-
       setLogo(data.logo || "");
       setBannerImage(data.bannerImage || "");
       setSlogan(data.slogan || "");
@@ -91,22 +87,25 @@ export default function EditPage() {
       setWebsite(data.socialLinks?.website || "");
       setSelectedCardapioId(data.cardapioId || null);
     }
-
     fetchPizzaria();
   }, [id]);
 
+  // Buscar cardapios do usuário
   useEffect(() => {
     async function fetchUserCardapios() {
-      if (!user?.id) return; 
-
-      const res = await fetch(`https://pizza-hub-lime.vercel.app/api/cardapio/${user.id}`);
+      if (!user?.id) return;
+      const res = await fetch(`https://pizza-hub-lime.vercel.app/api/cardapios/${user.id}`);
       const data = await res.json();
-      setUserCardapios(data);
+      if (Array.isArray(data)) {
+        setUserCardapios(data);
+      } else {
+        setUserCardapios([]); // previne erro de map
+      }
     }
-
     fetchUserCardapios();
   }, [user?.id]);
 
+  // Salvar alterações
   async function handleSave() {
     if (!pizzaria) return;
 
@@ -141,32 +140,21 @@ export default function EditPage() {
     <div className={styles.editorPage}>
       <section className={styles.formSection}>
         <h2>Editar Pizzaria</h2>
-
         <label>Logo (URL)</label>
         <input value={logo} onChange={(e) => setLogo(e.target.value)} />
-
         <label>Banner (URL)</label>
         <input value={bannerImage} onChange={(e) => setBannerImage(e.target.value)} />
-
         <label>Slogan</label>
         <input value={slogan} onChange={(e) => setSlogan(e.target.value)} />
-
         <label>Descrição</label>
         <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-
         <label>Galeria (URLs separados por vírgula)</label>
-        <input
-          value={gallery.join(", ")}
-          onChange={(e) => setGallery(e.target.value.split(",").map((s) => s.trim()))}
-        />
-
+        <input value={gallery.join(", ")} onChange={(e) => setGallery(e.target.value.split(",").map((s) => s.trim()))} />
         <h3>Redes sociais</h3>
         <label>Instagram</label>
         <input value={instagram} onChange={(e) => setInstagram(e.target.value)} />
-
         <label>WhatsApp</label>
         <input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
-
         <label>Website</label>
         <input value={website} onChange={(e) => setWebsite(e.target.value)} />
 
@@ -186,58 +174,9 @@ export default function EditPage() {
           ))}
         </div>
 
-        <CardapioForm pizzariaId={id} />
+        <CardapioForm />
 
-        <button onClick={handleSave} className={styles.saveBtn}>
-          Salvar alterações
-        </button>
-      </section>
-
-      <section className={styles.previewSection}>
-        <header className={styles.header}>
-          <div className={styles.logoMenu}>
-            {logo && <img src={logo} alt="Logo" className={styles.logo} />}
-            <nav className={styles.nav}>
-              <a href="#sobre">Sobre</a>
-              <a href="#galeria">Galeria</a>
-              <a href="#contato">Contato</a>
-            </nav>
-          </div>
-        </header>
-
-        {bannerImage && (
-          <div className={styles.bannerWrapper}>
-            <img src={bannerImage} alt="Banner" className={styles.banner} />
-            <div className={styles.bannerText}>
-              <h1>{slogan || "Slogan da Pizzaria"}</h1>
-            </div>
-          </div>
-        )}
-
-        <section id="galeria" className={styles.gallerySection}>
-          <h2>Galeria</h2>
-          <div className={styles.galleryGrid}>
-            {gallery.map((url, i) => (
-              <div className={styles.galleryItem} key={i}>
-                <img src={url} alt={`Imagem ${i}`} />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section id="sobre" className={styles.sobre}>
-          <h2>Sobre Nós</h2>
-          <p>{description || "Aqui vai uma descrição da pizzaria, sua história, ingredientes especiais e missão."}</p>
-        </section>
-
-        <section id="contato" className={styles.contato}>
-          <h2>Contato</h2>
-          <div className={styles.socialLinks}>
-            {instagram && <a href={instagram} className={styles.socialBtn}>Instagram</a>}
-            {whatsapp && <a href={whatsapp} className={styles.socialBtn}>WhatsApp</a>}
-            {website && <a href={website} className={styles.socialBtn}>Website</a>}
-          </div>
-        </section>
+        <button onClick={handleSave} className={styles.saveBtn}>Salvar alterações</button>
       </section>
     </div>
   );
