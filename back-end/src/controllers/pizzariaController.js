@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Pizzaria = require("../models/Pizzaria");
 
 exports.createPizzaria = async (req, res) => {

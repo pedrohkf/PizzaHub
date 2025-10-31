@@ -94,7 +94,7 @@ export default function EditPage() {
   useEffect(() => {
     async function fetchUserCardapios() {
       if (!user?.id) return;
-      const res = await fetch(`https://pizza-hub-lime.vercel.app/api/cardapios/${user.id}`);
+      const res = await fetch(`https://pizza-hub-lime.vercel.app/api/cardapio/${user.id}`);
       const data = await res.json();
       if (Array.isArray(data)) {
         setUserCardapios(data);
