@@ -117,7 +117,7 @@ export default function EditPage() {
       description,
       gallery,
       socialLinks: { instagram, whatsapp, website },
-      cardapioId: selectedCardapioId,
+      cardapio: selectedCardapioId,
     };
 
     const res = await fetch(`https://pizza-hub-lime.vercel.app/api/pizzarias/update/${id}`, {
