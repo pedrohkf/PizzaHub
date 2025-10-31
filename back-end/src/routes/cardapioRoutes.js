@@ -8,7 +8,7 @@ const {
 
 router.post("/", criarCardapio);
 
-router.get("/:pizzariaId", obterCardapio);
+router.get("/:userId", obterCardapio);
 
 router.put("/:id", atualizarCardapio);
 

@@ -5,6 +5,28 @@ import { useRouter, useParams } from "next/navigation";
 import styles from "./edit.module.css";
 import CardapioForm from "@/app/Components/Pizzaria/Cardapio-Form/cardapio";
 
+interface Pizza {
+  nome: string;
+  descricao: string;
+  precoPequena: number;
+  precoMedia: number;
+  precoGrande: number;
+  imagem: string;
+  destaque: boolean;
+  disponivel: boolean;
+}
+
+interface Categoria {
+  nome: string;
+  pizzas: Pizza[];
+}
+
+interface Cardapio {
+  _id?: string;
+  categorias: Categoria[];
+  nome?: string; // opcional, caso queira nomear o cardápio
+}
+
 interface Pizzaria {
   name: string;
   phone: string;
@@ -25,20 +47,16 @@ interface Pizzaria {
     whatsapp: string;
     website: string;
   };
-}
-
-interface EditPageProps {
-  params: { id: string };
+  cardapioId?: string; // para salvar o cardápio selecionado
 }
 
 export default function EditPage() {
   const router = useRouter();
-  const params = useParams(); // agora params é uma função do router
-  const id = params?.id;      // pega o id dinamicamente
+  const params = useParams();
+  const id = params?.id;
 
   const [pizzaria, setPizzaria] = useState<Pizzaria | null>(null);
 
-  // campos individuais para live preview
   const [logo, setLogo] = useState("");
   const [bannerImage, setBannerImage] = useState("");
   const [slogan, setSlogan] = useState("");
@@ -48,15 +66,18 @@ export default function EditPage() {
   const [whatsapp, setWhatsapp] = useState("");
   const [website, setWebsite] = useState("");
 
-  // no useEffect
+  const [userCardapios, setUserCardapios] = useState<Cardapio[]>([]);
+  const [selectedCardapioId, setSelectedCardapioId] = useState<string | null>(null);
+
+  // Pega pizzaria existente
   useEffect(() => {
     if (!id) return;
+
     async function fetchPizzaria() {
       const res = await fetch(`https://pizza-hub-lime.vercel.app/api/pizzarias/get/${id}`);
       const data = await res.json();
       setPizzaria(data);
 
-      // ⚡ Atualiza os campos do live preview
       setLogo(data.logo || "");
       setBannerImage(data.bannerImage || "");
       setSlogan(data.slogan || "");
@@ -65,11 +86,23 @@ export default function EditPage() {
       setInstagram(data.socialLinks?.instagram || "");
       setWhatsapp(data.socialLinks?.whatsapp || "");
       setWebsite(data.socialLinks?.website || "");
+      setSelectedCardapioId(data.cardapioId || null);
     }
+
     fetchPizzaria();
   }, [id]);
 
-  // salvar alterações
+  // Pega todos os cardápios do usuário
+  useEffect(() => {
+    async function fetchUserCardapios() {
+      const res = await fetch(`https://pizza-hub-lime.vercel.app/api/cardapios`);
+      const data = await res.json();
+      setUserCardapios(data);
+    }
+
+    fetchUserCardapios();
+  }, []);
+
   async function handleSave() {
     if (!pizzaria) return;
 
@@ -81,6 +114,7 @@ export default function EditPage() {
       description,
       gallery,
       socialLinks: { instagram, whatsapp, website },
+      cardapioId: selectedCardapioId,
     };
 
     const res = await fetch(`https://pizza-hub-lime.vercel.app/api/pizzarias/update/${id}`, {
@@ -88,7 +122,6 @@ export default function EditPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updated),
     });
-
 
     if (res.ok) {
       alert("Pizzaria atualizada com sucesso!");
@@ -102,7 +135,6 @@ export default function EditPage() {
 
   return (
     <div className={styles.editorPage}>
-      {/* FORMULÁRIO DE EDIÇÃO */}
       <section className={styles.formSection}>
         <h2>Editar Pizzaria</h2>
 
@@ -134,11 +166,27 @@ export default function EditPage() {
         <label>Website</label>
         <input value={website} onChange={(e) => setWebsite(e.target.value)} />
 
+        <h3>Cardápio</h3>
+        <div className={styles.cardapioList}>
+          {userCardapios.length === 0 && <p>Você ainda não possui cardápios.</p>}
+          {userCardapios.map((c) => (
+            <div key={c._id} className={styles.cardapioItem}>
+              <span>{c.nome || "Cardápio sem nome"}</span>
+              <button
+                onClick={() => setSelectedCardapioId(c._id!)}
+                className={selectedCardapioId === c._id ? styles.selectedBtn : ""}
+              >
+                {selectedCardapioId === c._id ? "Selecionado" : "Selecionar"}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <CardapioForm pizzariaId={id} />
+
         <button onClick={handleSave} className={styles.saveBtn}>
           Salvar alterações
         </button>
-
-        <CardapioForm />
       </section>
 
       <section className={styles.previewSection}>
@@ -177,8 +225,6 @@ export default function EditPage() {
           <h2>Sobre Nós</h2>
           <p>{description || "Aqui vai uma descrição da pizzaria, sua história, ingredientes especiais e missão."}</p>
         </section>
-
-
 
         <section id="contato" className={styles.contato}>
           <h2>Contato</h2>

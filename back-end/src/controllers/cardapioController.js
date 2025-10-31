@@ -17,7 +17,9 @@ exports.criarCardapio = async (req, res) => {
 exports.obterCardapio = async (req, res) => {
   try {
     const { userId } = req.params;
-    const cardapio = await Cardapio.findOne({ userId });
+    const numericUserId = Number(userId);
+
+    const cardapio = await Cardapio.findOne({ userID: numericUserId });
 
     if (!cardapio) {
       return res.status(404).json({ message: "Cardápio não encontrado." });
@@ -29,6 +31,7 @@ exports.obterCardapio = async (req, res) => {
     res.status(500).json({ error: "Erro ao buscar cardápio." });
   }
 };
+
 
 exports.atualizarCardapio = async (req, res) => {
   try {
