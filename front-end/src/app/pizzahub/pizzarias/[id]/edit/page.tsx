@@ -228,26 +228,41 @@ export default function EditPage() {
       </section>
 
       <section className={styles.previewSection}>
+        {/* HEADER */}
         <header className={styles.header}>
           <div className={styles.logoMenu}>
             {logo && <img src={logo} alt="Logo" className={styles.logo} />}
             <nav className={styles.nav}>
               <a href="#sobre">Sobre</a>
               <a href="#galeria">Galeria</a>
+              <a href="#cardapio">Cardápio</a>
               <a href="#contato">Contato</a>
             </nav>
           </div>
         </header>
 
+        {/* BANNER */}
         {bannerImage && (
           <div className={styles.bannerWrapper}>
             <img src={bannerImage} alt="Banner" className={styles.banner} />
             <div className={styles.bannerText}>
               <h1>{slogan || "Slogan da Pizzaria"}</h1>
+              <button className={styles.orderBtn}>Peça Agora</button>
             </div>
           </div>
         )}
 
+        {/* INFORMAÇÕES DA PIZZARIA */}
+        <section className={styles.infoSection}>
+          <h2>Informações</h2>
+          <p><strong>Telefone:</strong> {pizzaria.phone}</p>
+          <p><strong>Endereço:</strong> {pizzaria.street}, {pizzaria.numberHouse} - {pizzaria.neighborhood}, {pizzaria.state}</p>
+          <p><strong>Horário de Funcionamento:</strong> {pizzaria.openingHours}</p>
+          <p><strong>Taxa de Entrega:</strong> R$ {pizzaria.deliveryFee}</p>
+          <p><strong>Métodos de Pagamento:</strong> {pizzaria.methodPay}</p>
+        </section>
+
+        {/* GALERIA */}
         <section id="galeria" className={styles.gallerySection}>
           <h2>Galeria</h2>
           <div className={styles.galleryGrid}>
@@ -259,11 +274,41 @@ export default function EditPage() {
           </div>
         </section>
 
+        <section id="cardapio" className={styles.cardapioPreview}>
+          <h2>Cardápios Selecionados</h2>
+          {userCardapios
+            .filter(c => selectedCardapios.includes(c._id))
+            .map((cardapio) =>
+              cardapio.categorias.map((cat, index) => (
+                <div key={cardapio._id + index} className={styles.categoryCard}>
+                  <h3>{cat.nome}</h3>
+                  <div className={styles.pizzasGrid}>
+                    {cat.pizzas.map((pizza, i) => (
+                      <div key={i} className={styles.pizzaCard}>
+                        <h4>{pizza.nome}</h4>
+                        <p>{pizza.descricao}</p>
+                        <div className={styles.priceAndBuy}>
+                          <span>Pequena: R$ {pizza.precoPequena.toFixed(2)}</span>
+                          <button className={styles.buyBtn}>Comprar</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            )}
+        </section>
+
+
+        {/* SOBRE */}
         <section id="sobre" className={styles.sobre}>
           <h2>Sobre Nós</h2>
           <p>{description || "Aqui vai uma descrição da pizzaria, sua história, ingredientes especiais e missão."}</p>
         </section>
 
+        {/* CARDÁPIO / PRODUTOS */}
+
+        {/* CONTATO */}
         <section id="contato" className={styles.contato}>
           <h2>Contato</h2>
           <div className={styles.socialLinks}>
