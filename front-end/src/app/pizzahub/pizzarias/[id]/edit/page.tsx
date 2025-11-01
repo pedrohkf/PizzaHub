@@ -49,7 +49,7 @@ interface Pizzaria {
     whatsapp: string;
     website: string;
   };
-  cardapioSelecionado?: string; // _id do cardápio selecionado
+  cardapioSelecionado?: string[]; // _id do cardápio selecionado
 }
 
 export default function EditPage() {
@@ -70,7 +70,8 @@ export default function EditPage() {
   const [website, setWebsite] = useState("");
 
   const [userCardapios, setUserCardapios] = useState<Cardapio[]>([]);
-  const [selectedCardapioId, setSelectedCardapioId] = useState<string | null>(null);
+  const [selectedCardapios, setSelectedCardapios] = useState<string[]>([]);
+
 
   // Buscar dados da pizzaria
   useEffect(() => {
@@ -90,10 +91,11 @@ export default function EditPage() {
       setInstagram(data.socialLinks?.instagram || "");
       setWhatsapp(data.socialLinks?.whatsapp || "");
       setWebsite(data.socialLinks?.website || "");
-      setSelectedCardapioId(data.cardapioSelecionado || null);
+      setSelectedCardapios(data.cardapio || null);
     }
     fetchPizzaria();
   }, [id]);
+
 
   // Buscar todos os cardápios do usuário
   useEffect(() => {
@@ -119,7 +121,7 @@ export default function EditPage() {
 
   // Função para salvar alterações
   async function handleSave() {
-    console.log("Selected Cardápio ID ao salvar:", selectedCardapioId);
+    console.log("Selected Cardápio ID ao salvar:", selectedCardapios);
     if (!pizzaria) return;
 
     const updated = {
@@ -130,7 +132,7 @@ export default function EditPage() {
       description,
       gallery,
       socialLinks: { instagram, whatsapp, website },
-      cardapio: selectedCardapioId, // envia o _id do cardápio
+      cardapio: selectedCardapios, // envia o _id do cardápio
     };
 
     try {
@@ -198,13 +200,20 @@ export default function EditPage() {
                 <span>{cat.nome}</span>
                 <button
                   onClick={() => {
-                    console.log("Categoria clicada:", cat.nome, "Cardápio _id:", cardapio._id);
-                    setSelectedCardapioId(cardapio._id);
+                    if (selectedCardapios.includes(cardapio._id)) {
+                      // Remove se já estiver selecionado
+                      setSelectedCardapios(selectedCardapios.filter(id => id !== cardapio._id));
+                    } else {
+                      // Adiciona se ainda não estiver
+                      setSelectedCardapios([...selectedCardapios, cardapio._id]);
+                    }
+                    console.log("Cardápios selecionados:", selectedCardapios);
                   }}
-                  className={selectedCardapioId === cardapio._id ? styles.selectedBtn : ""}
+                  className={selectedCardapios.includes(cardapio._id) ? styles.selectedBtn : ""}
                 >
-                  {selectedCardapioId === cardapio._id ? "Selecionado" : "Selecionar"}
+                  {selectedCardapios.includes(cardapio._id) ? "Selecionado" : "Selecionar"}
                 </button>
+
 
               </div>
             ))
