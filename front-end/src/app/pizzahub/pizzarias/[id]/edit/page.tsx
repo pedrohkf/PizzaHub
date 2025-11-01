@@ -186,9 +186,9 @@ export default function EditPage() {
         <input value={instagram} onChange={(e) => setInstagram(e.target.value)} />
 
         <label>WhatsApp</label>
-        <input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
+        <input value={whatsapp} type="number" onChange={(e) => setWhatsapp(e.target.value)} />
 
-        <label>Website</label>
+        <label>Email</label>
         <input value={website} onChange={(e) => setWebsite(e.target.value)} />
 
         <h3>Categorias do seu Cardápio</h3>
@@ -288,7 +288,7 @@ export default function EditPage() {
                         <h4>{pizza.nome}</h4>
                         <p>{pizza.descricao}</p>
                         <div className={styles.priceAndBuy}>
-                          <span>Pequena: R$ {pizza.precoPequena.toFixed(2)}</span>
+                          <span>Média: R$ {pizza.precoMedia.toFixed(2)}</span>
                           <button className={styles.buyBtn}>Comprar</button>
                         </div>
                       </div>
@@ -313,7 +313,14 @@ export default function EditPage() {
           <h2>Contato</h2>
           <div className={styles.socialLinks}>
             {instagram && <a href={instagram} className={styles.socialBtn}>Instagram</a>}
-            {whatsapp && <a href={whatsapp} className={styles.socialBtn}>WhatsApp</a>}
+            {whatsapp && <a
+              href={'https://wa.me/' + whatsapp + '?text=' + encodeURIComponent('Olá, quero fazer um pedido!')}
+              className={styles.socialBtn}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp
+            </a>}
             {website && <a href={website} className={styles.socialBtn}>Website</a>}
           </div>
         </section>

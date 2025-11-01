@@ -33,6 +33,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -76,9 +77,9 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  color: #333;
 }
 
-/* Campos de entrada */
 .form input[type="text"],
 .form input[type="number"] {
   width: 100%;
@@ -88,25 +89,48 @@
   margin-top: 0.8rem;
   font-size: 0.95rem;
   transition: border-color 0.2s ease;
+  background-color: #fdfdfd;
+  /* ⚡ leve contraste */
+  color: #222;
+  /* texto escuro e visível */
 }
+
+.form input {
+  background: linear-gradient(180deg, #fdfdfd, #f7f7f7);
+  color: #222;
+}
+
+.form textarea {
+  background: linear-gradient(180deg, #fdfdfd, #f7f7f7);
+  color: #222;
+}
+
+
+.form input::placeholder {
+  color: #777;
+}
+
 
 .form input:focus {
   outline: none;
-  border-color: #222;
+  border-color: #111;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 
-#desc{
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+#desc {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #222;
 }
 
-#add{
-    margin-top: 1rem;
+#add {
+  margin-top: 1rem;
 }
 
 .pizza {
-    padding-top: 1rem;
+  padding-top: 1rem;
 }
 
 /* Organização em linha (para preços e checkboxes) */
@@ -155,16 +179,19 @@
 
 /* Botão para abrir o modal */
 .openButton {
-  background: #111;
-  color: #fff;
+  background: #ffd16df1;
+  color: #424242;
   border: none;
   border-radius: 8px;
   padding: 0.7rem 1.5rem;
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.3s;
+  width: 100%;
+  margin-top: 2rem;
 }
 
 .openButton:hover {
-  background: #333;
+  background: #fab218f1;
+  color: #1f0f0f;
 }

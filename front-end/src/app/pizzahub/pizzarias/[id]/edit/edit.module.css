@@ -1,39 +1,163 @@
-/* editor.module.css */
-
 .editorPage {
   display: flex;
-  gap: 40px;
-  padding: 20px;
-  font-family: 'Poppins', sans-serif;
+  grid-template-columns: 440px 1fr;
+  min-height: 100vh;
+  padding: 2rem;
+  background: radial-gradient(1200px 600px at 10% 10%, #2a2321 0%, var(--bg-2) 35%, var(--bg-1) 100%);
+  color: #f6f6f6;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
-/* FORMULÁRIO DE EDIÇÃO */
+/* mobile fallback */
+@media (max-width: 980px) {
+  .editorPage { grid-template-columns: 1fr; padding: 1rem; }
+}
+
+/* ========== Painel do formulário (lado esquerdo) ========== */
 .formSection {
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: calc(var(--radius));
+  padding: 1.6rem;
+  box-shadow: var(--soft-shadow);
+  border: 1px solid var(--glass-strong);
+  overflow-y: auto;
+  height: 170vh;
+}
+
+/* header do painel */
+.formSection h2 {
+  font-family: "Playfair Display", serif;
+  color: var(--accent-2);
+  font-size: 1.5rem;
+  margin: 0 0 0.6rem 0;
+  letter-spacing: 0.2px;
+}
+
+/* labels e inputs */
+.formSection label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: var(--accent-2);
+  font-size: 0.9rem;
 }
 
 .formSection input,
-.formSection textarea {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+.formSection textarea,
+.formSection select {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #fff;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  margin-top: 0.45rem;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.35) inset;
 }
 
-.saveBtn {
-  background: #FF4C29;
-  color: white;
-  font-weight: 600;
-  border-radius: 8px;
-  padding: 12px;
+.formSection input:focus,
+.formSection textarea:focus,
+.formSection select:focus {
+  outline: none;
+  transform: translateY(-2px);
+  border-color: rgba(255,184,77,0.95);
+  box-shadow: 0 6px 22px rgba(255,184,77,0.08);
+}
+
+/* textarea específico */
+.formSection textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* list of cardapios (grid) */
+.cardapioList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* cada item de cardapio — pense numa mesa iluminada */
+.cardapioItem {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 12px;
+  padding: 0.9rem;
+  border: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: flex-start;
+  transition: transform .18s ease, box-shadow .18s ease;
   cursor: pointer;
 }
 
-.saveBtn:hover {
-  background: #FF7F50;
+.cardapioItem:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.6), 0 2px 10px rgba(255,184,77,0.06);
 }
+
+/* nome categoria e botão */
+.cardapioItem span {
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.98rem;
+}
+
+.cardapioItem button {
+  margin-left: auto;
+  margin-top: 0.2rem;
+  border: none;
+  padding: 0.45rem 0.8rem;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  color: var(--accent-2);
+  cursor: pointer;
+  font-weight: 700;
+  transition: all .18s ease;
+}
+
+/* estado selecionado — botão dourado + glow */
+.selectedBtn {
+  background: linear-gradient(120deg, var(--accent-1), var(--accent-2));
+  color: #fff;
+  box-shadow: 0 2px 1px rgba(255, 136, 45, 0.76), 0 0 5px rgba(255, 184, 77, 0.74);
+}
+
+/* botão abrir modal cardápio */
+.openButton {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(255,122,0,0.95), rgba(255,184,77,0.95));
+  color: #111;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(255,122,0,0.12);
+}
+
+/* botão salvar */
+.saveBtn {
+  width: 100%;
+  margin-top: 1.2rem;
+  padding: 0.95rem;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  border: none;
+  color: #1b1006;
+  font-size: 1.05rem;
+  font-weight: 800;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(255,184,77,0.12), 0 0 14px rgba(255,184,77,0.06);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.saveBtn:hover { transform: translateY(-3px); box-shadow: 0 16px 50px rgba(255,184,77,0.18); }
+
 
 .previewSection {
   width: 80%;
@@ -42,335 +166,321 @@
   line-height: 1.6;
 }
 
-/* MENU FIXO */
+.cardapioList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cardapioItem {
+  background: rgba(255,255,255,0.08);
+  border-radius: 15px;
+  padding: 1rem;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.cardapioItem:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(255, 184, 77, 0.2);
+}
+
+.selectedBtn {
+  background: linear-gradient(135deg, #FF7A00, #FFB84D);
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+
+/* === GERAL === */
+.previewSection {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  background: #fdfcf8;
+  border-radius: 10px;
+}
+
+/* === HEADER === */
 .header {
-  width: 100%;
-  background: rgba(190, 30, 30, 0.95);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+  padding: 1.2rem 3rem;
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 100;
+  backdrop-filter: blur(8px);
 }
 
 .logoMenu {
-  width: 100%;
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 0;
 }
 
 .logoMenu img {
-  width: 3rem;
-  height: 3rem;
-  margin-left: 4rem;
-}
-
-.nav {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 4rem;
+  height: 60px;
+  border-radius: 12px;
+  object-fit: cover;
 }
 
 .nav a {
-  width: 10%;
+  margin-left: 2rem;
   text-decoration: none;
-  color: #FF4C29;
   font-weight: 600;
-  transition: color 0.3s;
-}
-
-.nav a:hover {
-  color: #FF7F50;
-}
-
-/* BANNER */
-
-.infoSection {
-  padding: 2rem;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  margin: 2rem 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-.infoSection p {
-  margin-bottom: 0.8rem;
-  font-size: 1rem;
   color: #333;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
+.nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 3px;
+  background: #e63946;
+  left: 0;
+  bottom: -4px;
+  transition: width 0.3s ease;
+}
 
+.nav a:hover::after {
+  width: 100%;
+}
+
+/* === BANNER === */
 .bannerWrapper {
   position: relative;
-  margin-top: 70px;
-  /* altura do menu */
+  width: 100%;
+  height: 550px;
+  overflow: hidden;
 }
 
-.banner {
+.bannerWrapper img {
   width: 100%;
-  max-height: 400px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+  transform: scale(1);
+  transition: transform 0.5s ease;
+}
+
+.bannerWrapper:hover img {
+  transform: scale(1.05);
 }
 
 .bannerText {
   position: absolute;
-  bottom: 20px;
-  left: 40px;
-  color: white;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  bottom: 15%;
+  left: 10%;
+  color: #fff;
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.7);
 }
 
 .bannerText h1 {
   font-size: 3rem;
-  margin: 0;
-}
-
-.bannerText p {
-  font-size: 1.2rem;
-  margin-top: 8px;
-}
-
-/* SEÇÃO SOBRE */
-.sobre {
-  padding: 60px 20px;
-  max-width: 1000px;
-  margin: auto;
-  text-align: center;
-}
-
-.sobre h2 {
-  font-size: 2rem;
-  color: #FF4C29;
-  margin-bottom: 20px;
-}
-
-/* GALERIA */
-.gallerySection {
-  padding: 60px 20px;
-  background: #FFF5F0;
-}
-
-.gallerySection h2 {
-  text-align: center;
-  font-size: 2rem;
-  color: #FF4C29;
-  margin-bottom: 30px;
-}
-
-.galleryGrid {
-  display: flex;
-  justify-content: start;
-  flex-wrap: wrap;
-  column-gap: 3rem;
-  width: 90%;
-  margin: auto;
-}
-
-.galleryItem img {
-  width: 10rem;
-  height: 10rem;
-  object-fit: cover;
-  border-radius: 8px;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.galleryItem img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* CONTATO / REDES SOCIAIS */
-.contato {
-  padding: 60px 20px;
-  text-align: center;
-}
-
-.socialLinks {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-
-.socialBtn {
-  display: inline-block;
-  padding: 12px 25px;
-  background: #FF4C29;
-  color: white;
-  font-weight: 600;
-  border-radius: 30px;
-  text-decoration: none;
-  transition: background 0.3s;
-}
-
-.socialBtn:hover {
-  background: #FF7F50;
-}
-
-.bannerWrapper {
-  position: relative;
-  width: 100%;
-  height: 400px;
-  overflow: hidden;
-  border-radius: 16px;
-}
-
-.banner {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.7);
-}
-
-.bannerText {
-  position: absolute;
-  bottom: 40px;
-  left: 40px;
-  color: #fff;
+  margin-bottom: 1rem;
+  font-weight: 700;
 }
 
 .orderBtn {
-  margin-top: 12px;
-  padding: 10px 20px;
-  background: linear-gradient(90deg, #ff4d4f, #ff7a59);
-  border: none;
-  border-radius: 8px;
-  color: #fff;
-  font-weight: bold;
+  width: 13rem;
+  background: #e63946;
+  color: rgb(231, 231, 231);
+  font-weight: 700;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.3s ease;
+  border: none;
 }
 
 .orderBtn:hover {
-  transform: scale(1.05);
+  background: #d62839;
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(230, 57, 70, 0.4);
 }
 
+/* === INFORMAÇÕES === */
+.infoSection {
+  padding: 2rem 3rem;
+  background: #fff5f0;
+  margin: 2rem 0;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.infoSection h2 {
+  color: #e63946;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.infoSection p {
+  margin: 0.6rem 0;
+  font-size: 1.05rem;
+}
+
+/* === GALERIA === */
+.gallerySection {
+  padding: 4rem;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.galleryItem img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.galleryItem img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* === CARDÁPIO === */
 .cardapioPreview {
-  margin-top: 32px;
+  padding: 2rem 3rem;
 }
 
 .categoryCard {
-  margin-bottom: 24px;
+  margin-bottom: 2.5rem;
+}
+
+.categoryCard h3 {
+  font-size: 1.8rem;
+  color: #e63946;
+  margin-bottom: 1rem;
 }
 
 .pizzasGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
 }
 
 .pizzaCard {
-  width: 220px;
-  padding: 12px;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.2s;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
-.pizzaCard:hover {
-  transform: translateY(-3px);
+.pizzaCard h4 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0.8rem 1rem 0.3rem;
 }
 
-.pizzaImg {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 8px;
+.pizzaCard p {
+  flex-grow: 1;
+  margin: 0 1rem 1rem;
+  color: #555;
 }
 
 .priceAndBuy {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 8px;
+  padding: 0.8rem 1rem 1rem;
+  border-top: 1px solid #eee;
 }
 
 .buyBtn {
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: none;
-  background-color: #ff4d4f;
+  background: #ff7f50;
   color: #fff;
-  font-weight: bold;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.2s;
+  font-weight: 700;
+  transition: all 0.3s ease;
 }
 
 .buyBtn:hover {
-  transform: scale(1.05);
+  background: #ff5722;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(255, 87, 34, 0.4);
 }
 
-
-/* Container da lista */
-.cardapioList {
-  display: flex;
-  flex-wrap: wrap;
-  /* vários itens na linha */
-  gap: 16px;
-  /* espaço entre itens */
-  margin-top: 16px;
+/* === SOBRE === */
+.sobre {
+  padding: 2rem 3rem;
+  margin-top: 2rem;
 }
 
-/* Cada item da lista */
-.cardapioItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background-color: #fff;
+.sobre h2 {
+  font-size: 2rem;
+  color: #e63946;
+  margin-bottom: 1rem;
+}
+
+.sobre p {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+/* === CONTATO === */
+.contato {
+  padding: 2rem 3rem;
+  margin-top: 2rem;
+}
+
+.socialLinks a {
+  display: inline-block;
+  margin-right: 1rem;
+  padding: 0.7rem 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-  width: 200px;
-  /* você pode ajustar */
+  background: #e63946;
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-/* Efeito ao passar o mouse */
-.cardapioItem:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+.socialLinks a:hover {
+  background: #d62839;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(230, 57, 70, 0.4);
 }
 
-/* Nome da categoria */
-.cardapioItem span {
-  font-weight: 600;
-  color: #333;
-}
+/* === RESPONSIVO === */
+@media (max-width: 768px) {
 
-/* Botão */
-.cardapioItem button {
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.2s, color 0.2s;
-  background-color: #eee;
-  color: #333;
-}
+  .infoSection,
+  .cardapioPreview,
+  .sobre,
+  .contato {
+    padding: 1.5rem;
+  }
 
-/* Botão selecionado */
-.cardapioItem button.selectedBtn {
-  background-color: #ff4d4f;
-  color: #fff;
-}
+  .pizzasGrid {
+    grid-template-columns: 1fr;
+  }
 
-/* Efeito ao passar o mouse no botão */
-.cardapioItem button:hover:not(.selectedBtn) {
-  background-color: #ddd;
-}
-
-
-/* RESPONSIVO */
-@media(max-width: 768px) {
   .bannerText h1 {
     font-size: 2rem;
   }
