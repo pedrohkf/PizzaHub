@@ -1,0 +1,150 @@
+/* ======== LAYOUT GERAL ======== */
+.editorPage {
+    min-height: 100vh;
+    background: #fafafa;
+    padding: 2rem;
+    color: #333;
+    font-family: "Inter", sans-serif;
+}
+
+/* ======== SEÇÃO DE CARDÁPIO ======== */
+.cardapioPreview {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.cardapioPreview h2 {
+    font-size: 1.8rem;
+    color: #222;
+    margin-bottom: 1rem;
+    text-align: center;
+    border-bottom: 3px solid #e63946;
+    display: inline-block;
+    padding-bottom: 0.3rem;
+}
+
+/* ======== CATEGORIAS ======== */
+.categoryCard {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.categoryCard h3 {
+    font-size: 1.4rem;
+    color: #222;
+    margin-bottom: 1rem;
+    border-left: 5px solid #e63946;
+    padding-left: 0.6rem;
+    letter-spacing: 0.5px;
+}
+
+/* ======== GRID DE PIZZAS ======== */
+.pizzasGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.2rem;
+}
+
+/* ======== CARTÃO DE PIZZA ======== */
+.pizzaCard {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pizzaCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ======== TÍTULO E DESCRIÇÃO ======== */
+.pizzaCard h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+    color: #222;
+}
+
+.pizzaCard p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+/* ======== PREÇO E BOTÃO ======== */
+.priceAndBuy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.priceAndBuy span {
+    font-weight: bold;
+    color: #444;
+}
+
+.buyBtn {
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.buyBtn:hover {
+    background: #d62828;
+}
+
+/* ======== ANIMAÇÃO SUAVE ======== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ======== RESPONSIVIDADE ======== */
+@media (max-width: 768px) {
+    .editorPage {
+        padding: 1rem;
+    }
+
+    .cardapioPreview h2 {
+        font-size: 1.5rem;
+    }
+
+    .categoryCard {
+        padding: 1rem;
+    }
+
+    .pizzasGrid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+
+    .pizzaCard {
+        padding: 0.8rem;
+    }
+
+    .buyBtn {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+}

@@ -247,10 +247,12 @@ export default function EditPage() {
             <img src={bannerImage} alt="Banner" className={styles.banner} />
             <div className={styles.bannerText}>
               <h1>{slogan || "Slogan da Pizzaria"}</h1>
-              <button className={styles.orderBtn}>Peça Agora</button>
+              <button className={styles.orderBtn}
+                onClick={() => router.push(`/pizzarias/${id}/cardapio`)}> Peça Agora</button>
             </div>
           </div>
-        )}
+        )
+        }
 
         {/* INFORMAÇÕES DA PIZZARIA */}
         <section className={styles.infoSection}>
@@ -289,7 +291,7 @@ export default function EditPage() {
                         <p>{pizza.descricao}</p>
                         <div className={styles.priceAndBuy}>
                           <span>Média: R$ {pizza.precoMedia.toFixed(2)}</span>
-                          <button className={styles.buyBtn}>Comprar</button>
+                          <button className={styles.buyBtn} onClick={() => router.push(`cardapio`)}>Comprar</button>
                         </div>
                       </div>
                     ))}
@@ -324,7 +326,7 @@ export default function EditPage() {
             {website && <a href={website} className={styles.socialBtn}>Website</a>}
           </div>
         </section>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 }
