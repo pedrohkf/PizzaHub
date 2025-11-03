@@ -7,7 +7,7 @@ exports.createPizzaria = async (req, res) => {
   res.status(201).json(pizzaria);
 };
 
-export const updatePizzaria = async (req, res) => {
+exports.updatePizzaria = async (req, res) => {
   try {
     const { cardapioId, ...rest } = req.body;
 
@@ -22,6 +22,7 @@ export const updatePizzaria = async (req, res) => {
     res.status(500).json({ error: "Erro ao atualizar pizzaria" });
   }
 };
+
 
 exports.getPizzarias = async (req, res) => {
   const pizzarias = await Pizzaria.find().populate("userId");

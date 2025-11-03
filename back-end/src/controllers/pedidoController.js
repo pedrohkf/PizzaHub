@@ -1,4 +1,4 @@
-const Pedido = require("../models/Pedido");
+const Pedido = require("../models/Pedidos");
 
 exports.criarPedido = async (req, res) => {
   try {

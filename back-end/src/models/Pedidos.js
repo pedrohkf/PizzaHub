@@ -7,19 +7,19 @@ const PedidoSchema = new Schema({
     endereco: { type: String, required: true },
     telefone: { type: String, required: true },
     cpf: { type: String, required: true },
-    formaPagamento: { 
-      type: String, 
-      enum: ["pix", "dinheiro", "cartão"], 
-      required: true 
+    formaPagamento: {
+      type: String,
+      enum: ["pix", "dinheiro", "cartão"],
+      required: true
     }
   },
   itens: [
     {
-      nome: { type: String, required: true },
-      preco: { type: Number, required: true },
+      pizzaId: { type: Schema.Types.ObjectId, ref: "Pizza", required: true },
       quantidade: { type: Number, required: true, default: 1 }
     }
   ],
+
   total: { type: Number, required: true },
   pizzariaId: { type: Schema.Types.ObjectId, ref: "Pizzaria", required: true },
   createdAt: { type: Date, default: Date.now },
