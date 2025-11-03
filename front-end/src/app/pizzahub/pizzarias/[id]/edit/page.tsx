@@ -248,7 +248,7 @@ export default function EditPage() {
             <div className={styles.bannerText}>
               <h1>{slogan || "Slogan da Pizzaria"}</h1>
               <button className={styles.orderBtn}
-                onClick={() => router.push(`/pizzarias/${id}/cardapio`)}> Peça Agora</button>
+                onClick={() => router.push(`cardapio`)}> Peça Agora</button>
             </div>
           </div>
         )

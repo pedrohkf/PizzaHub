@@ -3,10 +3,9 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import styles from "./cardapio.module.css";
-import CardapioForm from "@/app/Components/Pizzaria/Cardapio-Form/cardapio";
 import { useAuth } from "@/context/AuthContext";
+import Carrinho from "../../../../Components/Carrinho/Carrinho"
 
-// Tipos
 interface Pizza {
     nome: string;
     descricao: string;
@@ -29,41 +28,43 @@ interface Cardapio {
     userId: string;
 }
 
-interface Pizzaria {
-    name: string;
-    phone: string;
-    openingHours: string;
-    numberHouse: string;
-    street: string;
-    neighborhood: string;
-    state: string;
-    deliveryFee: string;
-    methodPay: "dinheiro" | "pix" | "cartão";
-    logo: string;
-    bannerImage: string;
-    gallery: string[];
-    slogan: string;
-    description: string;
-    socialLinks: {
-        instagram: string;
-        whatsapp: string;
-        website: string;
-    };
-    cardapioSelecionado?: string[]; // _id do cardápio selecionado
-}
-
-export default function CardapioPage() {
-    const router = useRouter();
+export default function CardapiosPage() {
     const params = useParams();
     const id = params?.id;
     const { user } = useAuth();
 
-    // Estados principais
-    const [pizzaria, setPizzaria] = useState<Pizzaria | null>(null);
-
     const [userCardapios, setUserCardapios] = useState<Cardapio[]>([]);
     const [selectedCardapios, setSelectedCardapios] = useState<string[]>([]);
 
+    const [cart, setCart] = useState<Pizza[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Estados do formulário de finalização
+    const [nomeCliente, setNomeCliente] = useState("");
+    const [endereco, setEndereco] = useState("");
+    const [telefone, setTelefone] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [formaPagamento, setFormaPagamento] = useState<"pix" | "dinheiro" | "cartão">("pix");
+
+    // Carregar carrinho do localStorage
+    useEffect(() => {
+        const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        setCart(savedCart);
+    }, []);
+
+    // Atualizar localStorage quando carrinho mudar
+    useEffect(() => {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }, [cart]);
+
+    // Adicionar pizza ao carrinho
+    function addToCart(pizza: Pizza) {
+        setCart(prev => [...prev, pizza]);
+        alert(`${pizza.nome} foi adicionado ao carrinho!`);
+    }
+
+    // Total do carrinho
+    const total = cart.reduce((sum, pizza) => sum + pizza.precoMedia, 0);
 
     // Buscar dados da pizzaria
     useEffect(() => {
@@ -71,78 +72,80 @@ export default function CardapioPage() {
         async function fetchPizzaria() {
             const res = await fetch(`https://pizza-hub-lime.vercel.app/api/pizzarias/get/${id}`);
             const data = await res.json();
-
-            console.log("Pizzaria carregada do backend:", data);
-
-            setPizzaria(data);
-            setSelectedCardapios(data.cardapio || null);
+            setSelectedCardapios(data.cardapio || []);
         }
         fetchPizzaria();
     }, [id]);
-
 
     // Buscar todos os cardápios do usuário
     useEffect(() => {
         async function fetchUserCardapios() {
             if (!user?.id) return;
-            console.log("Buscando cardápios do usuário com ID:", user.id);
-
             const res = await fetch(`https://pizza-hub-lime.vercel.app/api/cardapio/${user.id}`);
             const data = await res.json();
-
-            console.log("Resposta do backend:", data);
-
-            if (Array.isArray(data)) {
-                console.log("Cardápios recebidos:", data.map(c => c._id));
-                setUserCardapios(data);
-            } else {
-                setUserCardapios([]);
-            }
+            if (Array.isArray(data)) setUserCardapios(data);
         }
         fetchUserCardapios();
     }, [user?.id]);
 
+    // Finalizar pedido e salvar no localStorage
+    function handleConfirmOrder() {
+        if (!nomeCliente || !endereco || !telefone || !cpf) {
+            alert("Preencha todos os campos!");
+            return;
+        }
 
-    // Função para salvar alterações
-    async function handleSave() {
-        console.log("Selected Cardápio ID ao salvar:", selectedCardapios);
-        if (!pizzaria) return;
-
-        const updated = {
-            ...pizzaria,
-            cardapio: selectedCardapios, // envia o _id do cardápio
+        const pedido = {
+            cliente: { nome: nomeCliente, endereco, telefone, cpf, formaPagamento },
+            data: new Date().toISOString()
         };
 
-        try {
-            const res = await fetch(`https://pizza-hub-lime.vercel.app/api/pizzarias/update/${id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(updated),
-            });
+        const pedidosSalvos = JSON.parse(localStorage.getItem("pedidos") || "[]");
+        pedidosSalvos.push(pedido);
+        localStorage.setItem("pedidos", JSON.stringify(pedidosSalvos));
 
-            if (res.ok) {
-                alert("Pizzaria atualizada com sucesso!");
-                router.refresh();
-            } else {
-                const errText = await res.text();
-                console.error("Erro no backend:", errText);
-                alert("Erro ao salvar. Verifique o console.");
-            }
-        } catch (err) {
-            console.error("Erro ao atualizar pizzaria:", err);
-            alert("Erro de conexão ao salvar.");
-        }
+        alert("Pedido finalizado com sucesso!");
+        setCart([]);
+        setIsModalOpen(false);
+        
+        setNomeCliente("");
+        setEndereco("");
+        setTelefone("");
+        setCpf("");
+        setFormaPagamento("pix");
     }
 
-    if (!pizzaria) return <p>Carregando...</p>;
+    useEffect(() => {
+        if (isModalOpen) {
+            const pedidosSalvos = JSON.parse(localStorage.getItem("pedidos") || "[]");
+            if (pedidosSalvos.length > 0) {
+                const ultimoPedido = pedidosSalvos[pedidosSalvos.length - 1];
+                if (ultimoPedido?.cliente) {
+                    setNomeCliente(ultimoPedido.cliente.nome || "");
+                    setEndereco(ultimoPedido.cliente.endereco || "");
+                    setTelefone(ultimoPedido.cliente.telefone || "");
+                    setCpf(ultimoPedido.cliente.cpf || "");
+                    setFormaPagamento(ultimoPedido.cliente.formaPagamento || "pix");
+                }
+            }
+        }
+    }, [isModalOpen]);
+
+
+    if (!selectedCardapios) return <p>Carregando...</p>;
 
     return (
         <div className={styles.editorPage}>
             <section id="cardapio" className={styles.cardapioPreview}>
-                <h2>Cardápios Selecionados</h2>
+                <h2>Cardápios</h2>
+
+                <Carrinho cart={cart} setCart={setCart} />
+
+
+                {/* Cardápios */}
                 {userCardapios
                     .filter(c => selectedCardapios.includes(c._id))
-                    .map((cardapio) =>
+                    .map(cardapio =>
                         cardapio.categorias.map((cat, index) => (
                             <div key={cardapio._id + index} className={styles.categoryCard}>
                                 <h3>{cat.nome}</h3>
@@ -153,7 +156,7 @@ export default function CardapioPage() {
                                             <p>{pizza.descricao}</p>
                                             <div className={styles.priceAndBuy}>
                                                 <span>Média: R$ {pizza.precoMedia.toFixed(2)}</span>
-                                                <button className={styles.buyBtn} onClick={() => router.push(`/pizzarias/${id}/cardapio`)}>Comprar</button>
+                                                <button className={styles.buyBtn} onClick={() => addToCart(pizza)}>Comprar</button>
                                             </div>
                                         </div>
                                     ))}
@@ -161,7 +164,41 @@ export default function CardapioPage() {
                             </div>
                         ))
                     )}
+                <button className={styles.finalizeBtn} onClick={() => setIsModalOpen(true)}>
+                    Finalizar Pedido
+                </button>
             </section>
-        </div >
+
+            {/* Modal de finalização */}
+            {isModalOpen && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <h2>Finalize seu pedido</h2>
+
+                        <label>Nome:</label>
+                        <input value={nomeCliente} onChange={e => setNomeCliente(e.target.value)} />
+
+                        <label>Endereço:</label>
+                        <input value={endereco} onChange={e => setEndereco(e.target.value)} />
+
+                        <label>Telefone:</label>
+                        <input value={telefone} onChange={e => setTelefone(e.target.value)} />
+
+                        <label>CPF:</label>
+                        <input value={cpf} onChange={e => setCpf(e.target.value)} />
+
+                        <label>Forma de Pagamento:</label>
+                        <select value={formaPagamento} onChange={e => setFormaPagamento(e.target.value as any)}>
+                            <option value="pix">PIX</option>
+                            <option value="dinheiro">Dinheiro</option>
+                            <option value="cartão">Cartão</option>
+                        </select>
+
+                        <button onClick={handleConfirmOrder}>Confirmar Pedido</button>
+                        <button onClick={() => setIsModalOpen(false)}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+        </div>
     );
 }
