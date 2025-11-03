@@ -6,7 +6,9 @@ import styles from "./cardapio.module.css";
 import { useAuth } from "@/context/AuthContext";
 import Carrinho from "../../../../Components/Carrinho/Carrinho"
 
+
 interface Pizza {
+    _id: string;
     nome: string;
     descricao: string;
     precoPequena: number;
@@ -32,6 +34,7 @@ export default function CardapiosPage() {
     const params = useParams();
     const id = params?.id;
     const { user } = useAuth();
+    const router = useRouter();
 
     const [userCardapios, setUserCardapios] = useState<Cardapio[]>([]);
     const [selectedCardapios, setSelectedCardapios] = useState<string[]>([]);
@@ -89,30 +92,74 @@ export default function CardapiosPage() {
     }, [user?.id]);
 
     // Finalizar pedido e salvar no localStorage
-    function handleConfirmOrder() {
+    async function handleConfirmOrder() {
+        // 1️⃣ Verificar se todos os campos estão preenchidos
         if (!nomeCliente || !endereco || !telefone || !cpf) {
             alert("Preencha todos os campos!");
             return;
         }
 
+        // 2️⃣ Agrupar pizzas iguais do carrinho
+        const groupedItems: { [key: string]: number } = {};
+        cart.forEach(pizza => {
+            if (groupedItems[pizza._id]) {
+                groupedItems[pizza._id] += 1;
+            } else {
+                groupedItems[pizza._id] = 1;
+            }
+        });
+
+        // Transformar objeto em array de itens
+        const itens = Object.entries(groupedItems).map(([pizzaId, quantidade]) => ({
+            pizzaId,
+            quantidade
+        }));
+
+        // 3️⃣ Calcular o total do pedido
+        const total = cart.reduce((sum, pizza) => sum + pizza.precoMedia, 0);
+
+        // 4️⃣ Montar o objeto do pedido
         const pedido = {
             cliente: { nome: nomeCliente, endereco, telefone, cpf, formaPagamento },
-            data: new Date().toISOString()
+            itens,
+            total,
+            pizzariaId: id
         };
 
-        const pedidosSalvos = JSON.parse(localStorage.getItem("pedidos") || "[]");
-        pedidosSalvos.push(pedido);
-        localStorage.setItem("pedidos", JSON.stringify(pedidosSalvos));
+        try {
+            // 5️⃣ Enviar para o backend
+            const res = await fetch("https://pizza-hub-lime.vercel.app/api/pedidos", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(pedido)
+            });
 
-        alert("Pedido finalizado com sucesso!");
-        setCart([]);
-        setIsModalOpen(false);
-        
-        setNomeCliente("");
-        setEndereco("");
-        setTelefone("");
-        setCpf("");
-        setFormaPagamento("pix");
+            if (!res.ok) throw new Error("Erro ao criar pedido");
+
+            const data = await res.json();
+            alert("Pedido finalizado com sucesso!");
+
+            // 6️⃣ Limpar carrinho e modal
+            setCart([]);
+            setIsModalOpen(false);
+
+            // 7️⃣ Resetar formulário
+            setNomeCliente("");
+            setEndereco("");
+            setTelefone("");
+            setCpf("");
+            setFormaPagamento("pix");
+
+            // 8️⃣ Salvar localmente também (opcional)
+            const pedidosSalvos = JSON.parse(localStorage.getItem("pedidos") || "[]");
+            pedidosSalvos.push(pedido);
+            localStorage.setItem("pedidos", JSON.stringify(pedidosSalvos));
+
+            router.push("agradecimento");
+        } catch (err) {
+            console.error(err);
+            alert("Erro ao enviar pedido. Tente novamente.");
+        }
     }
 
     useEffect(() => {

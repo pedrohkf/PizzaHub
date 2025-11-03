@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a76, #ffd07f);
+}
+
+.card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.card h1 {
+    color: #d32f2f;
+    margin-bottom: 0.5rem;
+}
+
+.card h2 {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+}
+
+.card li {
+    margin: 0.3rem 0;
+    color: #555;
+}
+
+.card h3 {
+    margin-top: 1rem;
+    color: #d32f2f;
+}
+
+.backBtn {
+    margin-top: 1.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.backBtn:hover {
+    background-color: #b71c1c;
+}
