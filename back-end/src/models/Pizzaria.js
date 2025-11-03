@@ -29,6 +29,7 @@ const PizzariaSchema = new mongoose.Schema({
 
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   cardapio: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cardapio", default: "" }],
+  pedidos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pedidos", default: "" }],
 
   createAt: { type: Date, default: Date.now },
 });
