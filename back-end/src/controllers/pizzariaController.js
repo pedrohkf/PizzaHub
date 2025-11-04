@@ -16,7 +16,6 @@ exports.softDeletePizzaria = async (req, res) => {
       return res.status(404).json({ error: "Pizzaria não encontrada" });
     }
 
-    // Marca como deletada
     pizzaria.deleted = true;
     pizzaria.deletedAt = new Date();
     await pizzaria.save();

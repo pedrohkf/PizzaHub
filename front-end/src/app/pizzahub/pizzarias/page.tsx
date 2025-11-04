@@ -4,7 +4,7 @@ import styles from "./pizzarias.module.css";
 import Link from "next/link";
 import Share from "../../../../public/imgs/Share";
 import Edit from "../../../../public/imgs/Edit";
-import Delete from "../../../../public/imgs/Delete";
+import DeleteButton from "@/app/Components/DeleteButton/DeleteButton";
 
 
 interface Pizzaria {
@@ -45,7 +45,7 @@ export default async function Page() {
                   <p><strong>Taxa de entrega:</strong> R$ {pizzaria.deliveryFee}</p>
                    <Link href={`pizzarias/${pizzaria._id}/edit`}><Edit /></Link>
                    <Link href={`pizzarias/${pizzaria._id}`}><Share /></Link>
-                   <Delete />
+                   <DeleteButton pizzariaId={pizzaria._id} />
                 </div>
               </Link>
             ))
