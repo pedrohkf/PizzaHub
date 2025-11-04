@@ -27,6 +27,11 @@ const PizzariaSchema = new mongoose.Schema({
     website: { type: String, default: "" },
   },
 
+  deleted: { type: Boolean, default: false },
+  deletedAt: { type: Date, default: null },
+  updatedAt: { type: Date, default: Date.now },
+
+
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   cardapio: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cardapio", default: "" }],
   pedidos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pedidos", default: "" }],
