@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  padding: 2rem;
+  color: #fff;
+  background: #111;
+  min-height: 100vh;
+}
+
+.container h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card {
+  background: #1c1c1c;
+  border-radius: 12px;
+  padding: 1.2rem;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  margin: 0.3rem 0;
+}
+
+.entregue {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.pendente {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.loading,
+.empty {
+  color: #ccc;
+  text-align: center;
+  margin-top: 3rem;
+}
