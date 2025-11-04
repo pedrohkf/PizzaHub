@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react'
 const menuItems = [
     { to: "dashboard", label: "Dashboard", icon: "" },
     { to: "pizzarias", label: "Pizzarias", icon: "" },
-    { to: "cardapios", label: "Cardápios", icon: "" },
     { to: "pedidos", label: "Pedidos", icon: "" },
     { to: "help", label: "Ajuda", icon: "" },
 ];

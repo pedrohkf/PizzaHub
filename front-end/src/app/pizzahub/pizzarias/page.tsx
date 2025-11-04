@@ -2,6 +2,10 @@ import { getPizzarias } from "@/app/actions/get-pizzarias";
 import SideMenu from "@/app/Components/SideMenu/SideMenu";
 import styles from "./pizzarias.module.css";
 import Link from "next/link";
+import Share from "../../../../public/imgs/Share";
+import Edit from "../../../../public/imgs/Edit";
+import Delete from "../../../../public/imgs/Delete";
+
 
 interface Pizzaria {
   _id: string;
@@ -31,7 +35,7 @@ export default async function Page() {
         <div className={styles.list}>
           {pizzarias.length > 0 ? (
             pizzarias.map((pizzaria: Pizzaria) => (
-              <Link href={`pizzarias/${pizzaria._id}/edit`} key={pizzaria._id} className={styles.cardLink}>
+              <Link href={`pizzarias/${pizzaria._id}`} key={pizzaria._id} className={styles.cardLink}>
                 <div className={styles.card}>
                   <h2>{pizzaria.name}</h2>
                   <p><strong>Telefone:</strong> {pizzaria.phone}</p>
@@ -39,6 +43,9 @@ export default async function Page() {
                   <p><strong>Bairro:</strong> {pizzaria.neighborhood}</p>
                   <p><strong>Estado:</strong> {pizzaria.state}</p>
                   <p><strong>Taxa de entrega:</strong> R$ {pizzaria.deliveryFee}</p>
+                   <Link href={`pizzarias/${pizzaria._id}/edit`}><Edit /></Link>
+                   <Link href={`pizzarias/${pizzaria._id}`}><Share /></Link>
+                   <Delete />
                 </div>
               </Link>
             ))
