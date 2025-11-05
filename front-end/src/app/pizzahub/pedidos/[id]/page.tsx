@@ -78,7 +78,7 @@ export default function PedidosPage() {
 
         // --- Buscar cardápio ---
         const cardapioRes = await fetch(
-          `https://pizza-hub-lime.vercel.app/api/cardapio/${user.id}`
+          `https://pizza-hub-lime.vercel.app/api/cardapio/${user?.id}`
         );
         const cardapioData = await cardapioRes.json();
 
