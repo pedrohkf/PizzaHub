@@ -36,10 +36,10 @@ exports.listarPedidos = async (req, res) => {
 
 exports.listarPedidosPorPizzaria = async (req, res) => {
   try {
-    const { pizzariaId } = req.params;
+    const { userID } = req.params;
 
-    const pedidos = await Pedido.find({ pizzariaId });
-    const cardapio = await Cardapio.findOne({ userId: pizzariaId }).lean();
+    const pedidos = await Pedido.find({ pizzariaId: userID });
+    const cardapio = await Cardapio.findOne({ userId: userID }).lean();
 
     if (!cardapio) {
       return res.status(404).json({ message: "Cardápio não encontrado para essa pizzaria." });

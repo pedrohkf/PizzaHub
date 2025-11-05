@@ -19,31 +19,30 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
- useEffect(() => {
-  const token = document.cookie
-    .split("; ")
-    .find(c => c.startsWith("token="))
-    ?.split("=")[1];
+  useEffect(() => {
+    const token = document.cookie.split("; ").find(c => c.startsWith("token="))?.split("=")[1];
+    if (!token) {
+      setLoading(false);
+      return;
+    }
 
-    console.log("token " + token)
-
-  if (token) {
     axios.get("https://pizza-hub-lime.vercel.app/auth/me", {
       headers: { Authorization: `Bearer ${token}` },
     })
-    .then(res => {
-  const userData = res.data.user;
-  setUser({
-    id: userData._id,
-    name: userData.name || "",
-    email: userData.email,
-    token: token,
-  });
-})
-    .catch(() => setUser(null));
-  }
-}, []);
+      .then(res => {
+        const userData = res.data.user;
+        setUser({
+          id: userData._id,
+          name: userData.name || "",
+          email: userData.email,
+          token,
+        });
+      })
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false));
+  }, []);
 
   const login = (userData: User) => {
     setUser(userData);

@@ -6,6 +6,7 @@ import styles from "./pedidos.module.css";
 import SideMenu from "@/app/Components/SideMenu/SideMenu";
 import { useAuth } from "@/context/AuthContext";
 
+// Tipos
 interface Pizza {
   _id: string;
   nome: string;
@@ -34,7 +35,7 @@ interface Pedido {
   };
   itens: {
     quantidade: number;
-    pizzaId: string; // Agora é só o ID, sem populate
+    pizzaId: string; // Agora só o ID
   }[];
   total: number;
   entregue: boolean;
@@ -48,7 +49,7 @@ export default function PedidosPage() {
   const [cardapio, setCardapio] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Função para buscar os dados das pizzas
+  // Função auxiliar para buscar a pizza correspondente
   function buscarPizzaPorId(pizzaId: string) {
     for (const categoria of cardapio) {
       const pizza = categoria.pizzas.find((p) => p._id === pizzaId);
@@ -59,21 +60,29 @@ export default function PedidosPage() {
 
   useEffect(() => {
     if (!id || !user?.id) return;
-    console.log("Pizzaria:", id);
 
     async function carregarDados() {
       try {
+        // --- Buscar pedidos da pizzaria ---
         const pedidosRes = await fetch(
-          `https://pizza-hub-lime.vercel.app/api/pedidos/pizzaria/${id}`
+          `https://pizza-hub-lime.vercel.app/api/pedidos/${id}`
         );
         const pedidosData = await pedidosRes.json();
 
+        console.log("pedidosData:", pedidosData);
+
+        // Garante que sempre seja array
+        const listaPedidos = Array.isArray(pedidosData)
+          ? pedidosData
+          : pedidosData.pedidos || [];
+
+        // --- Buscar cardápio ---
         const cardapioRes = await fetch(
-          `https://pizza-hub-lime.vercel.app/api/cardapio/${user?.id}`
+          `https://pizza-hub-lime.vercel.app/api/cardapio/${user.id}`
         );
         const cardapioData = await cardapioRes.json();
 
-        setPedidos(pedidosData);
+        setPedidos(listaPedidos);
         setCardapio(cardapioData.categorias || []);
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
@@ -83,11 +92,12 @@ export default function PedidosPage() {
     }
 
     carregarDados();
-  }, [id, user]);
+  }, [id, user?.id]);
 
+  // --- Tratamento visual ---
 
+  if (!user) return <p className={styles.loading}>Carregando usuário...</p>;
   if (loading) return <p className={styles.loading}>Carregando pedidos...</p>;
-
   if (pedidos.length === 0)
     return <p className={styles.empty}>Nenhum pedido foi feito ainda 🍕</p>;
 
@@ -95,6 +105,7 @@ export default function PedidosPage() {
     <div className={styles.container}>
       <SideMenu />
       <h1>Pedidos da Pizzaria</h1>
+
       <div className={styles.list}>
         {pedidos.map((pedido) => (
           <div key={pedido._id} className={styles.card}>
