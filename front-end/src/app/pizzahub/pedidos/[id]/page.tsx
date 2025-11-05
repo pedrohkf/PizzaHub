@@ -5,6 +5,24 @@ import { useParams } from "next/navigation";
 import styles from "./pedidos.module.css";
 import SideMenu from "@/app/Components/SideMenu/SideMenu";
 
+// Tipos de dados
+interface Pizza {
+  _id: string;
+  nome: string;
+  descricao: string;
+  precoPequena: number;
+  precoMedia: number;
+  precoGrande: number;
+  imagem: string;
+  destaque: boolean;
+  disponivel: boolean;
+}
+
+interface Categoria {
+  nome: string;
+  pizzas: Pizza[];
+}
+
 interface Pedido {
   _id: string;
   cliente: {
@@ -16,42 +34,55 @@ interface Pedido {
   };
   itens: {
     quantidade: number;
-    pizzaId: {
-      _id: string;
-      nome: string;
-      preco: number;
-      descricao?: string;
-      imagem?: string;
-    };
+    pizzaId: string; // Agora é só o ID, sem populate
   }[];
   total: number;
   entregue: boolean;
   createdAt: string;
 }
 
-
 export default function PedidosPage() {
   const { id } = useParams();
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
+  const [cardapio, setCardapio] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Função para buscar os dados das pizzas
+  function buscarPizzaPorId(pizzaId: string) {
+    for (const categoria of cardapio) {
+      const pizza = categoria.pizzas.find((p) => p._id === pizzaId);
+      if (pizza) return pizza;
+    }
+    return null;
+  }
 
   useEffect(() => {
     if (!id) return;
 
-    async function fetchPedidos() {
+    async function carregarDados() {
       try {
-        const res = await fetch(`https://pizza-hub-lime.vercel.app/api/pedidos/pizzaria/${id}`);
-        const data = await res.json();
-        console.log(data)
-        setPedidos(data);
+        // Busca os pedidos
+        const pedidosRes = await fetch(
+          `https://pizza-hub-lime.vercel.app/api/pedidos/pizzaria/${id}`
+        );
+        const pedidosData = await pedidosRes.json();
+
+        // Busca o cardápio
+        const cardapioRes = await fetch(
+          `https://pizza-hub-lime.vercel.app/api/cardapio/pizzaria/${id}`
+        );
+        const cardapioData = await cardapioRes.json();
+
+        setPedidos(pedidosData);
+        setCardapio(cardapioData.categorias || []);
       } catch (err) {
-        console.error("Erro ao carregar pedidos:", err);
+        console.error("Erro ao carregar dados:", err);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchPedidos();
+    carregarDados();
   }, [id]);
 
   if (loading) return <p className={styles.loading}>Carregando pedidos...</p>;
@@ -67,13 +98,27 @@ export default function PedidosPage() {
         {pedidos.map((pedido) => (
           <div key={pedido._id} className={styles.card}>
             <h2>{pedido.cliente.nome}</h2>
-            {pedido.itens.map((item, index) => (
-              <div key={index}>
-                <p><strong>Pizza:</strong> {item.pizzaId.nome}</p>
-                <p><strong>Preço:</strong> R$ {item.pizzaId.preco.toFixed(2)}</p>
-                <p><strong>Quantidade:</strong> {item.quantidade}</p>
-              </div>
-            ))}
+
+            {pedido.itens.map((item, index) => {
+              const pizza = buscarPizzaPorId(item.pizzaId);
+              return (
+                <div key={index} className={styles.item}>
+                  <p>
+                    <strong>Pizza:</strong>{" "}
+                    {pizza ? pizza.nome : "Pizza removida do cardápio"}
+                  </p>
+                  <p>
+                    <strong>Preço:</strong>{" "}
+                    {pizza
+                      ? `R$ ${pizza.precoMedia.toFixed(2)}`
+                      : "Indisponível"}
+                  </p>
+                  <p>
+                    <strong>Quantidade:</strong> {item.quantidade}
+                  </p>
+                </div>
+              );
+            })}
 
             <p>
               <strong>Status:</strong>{" "}

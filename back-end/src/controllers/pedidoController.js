@@ -1,4 +1,5 @@
 const Pedido = require("../models/Pedidos");
+const Cardapio = require("../models/Cardapio");
 
 exports.criarPedido = async (req, res) => {
   try {
