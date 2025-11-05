@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import styles from "./pedidos.module.css";
 import SideMenu from "@/app/Components/SideMenu/SideMenu";
+import { useAuth } from "@/context/AuthContext";
 
-// Tipos de dados
 interface Pizza {
   _id: string;
   nome: string;
@@ -43,6 +43,7 @@ interface Pedido {
 
 export default function PedidosPage() {
   const { id } = useParams();
+  const { user } = useAuth();
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [cardapio, setCardapio] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
@@ -57,19 +58,18 @@ export default function PedidosPage() {
   }
 
   useEffect(() => {
-    if (!id) return;
+    if (!id || !user?.id) return;
+    console.log("Pizzaria:", id);
 
     async function carregarDados() {
       try {
-        // Busca os pedidos
         const pedidosRes = await fetch(
           `https://pizza-hub-lime.vercel.app/api/pedidos/pizzaria/${id}`
         );
         const pedidosData = await pedidosRes.json();
 
-        // Busca o cardápio
         const cardapioRes = await fetch(
-          `https://pizza-hub-lime.vercel.app/api/cardapio/pizzaria/${id}`
+          `https://pizza-hub-lime.vercel.app/api/cardapio/${user?.id}`
         );
         const cardapioData = await cardapioRes.json();
 
@@ -83,7 +83,8 @@ export default function PedidosPage() {
     }
 
     carregarDados();
-  }, [id]);
+  }, [id, user]);
+
 
   if (loading) return <p className={styles.loading}>Carregando pedidos...</p>;
 

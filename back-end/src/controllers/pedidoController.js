@@ -38,7 +38,7 @@ exports.listarPedidosPorPizzaria = async (req, res) => {
   try {
     const { pizzariaId } = req.params;
 
-    const pedidos = await Pedido.find({ pizzariaId }).sort({ createdAt: -1 }).lean();
+    const pedidos = await Pedido.find({ pizzariaId });
     const cardapio = await Cardapio.findOne({ userId: pizzariaId }).lean();
 
     if (!cardapio) {

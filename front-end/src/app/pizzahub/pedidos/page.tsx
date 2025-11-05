@@ -2,8 +2,6 @@ import { getPizzarias } from "@/app/actions/get-pizzarias";
 import SideMenu from "@/app/Components/SideMenu/SideMenu";
 import styles from "./Pizzaria.module.css";
 import Link from "next/link";
-import DeleteButton from "@/app/Components/DeleteButton/DeleteButton";
-
 
 interface Pizzaria {
   _id: string;
