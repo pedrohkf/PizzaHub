@@ -14,10 +14,21 @@ interface Pedido {
     cpf: string;
     formaPagamento: string;
   };
+  itens: {
+    quantidade: number;
+    pizzaId: {
+      _id: string;
+      nome: string;
+      preco: number;
+      descricao?: string;
+      imagem?: string;
+    };
+  }[];
   total: number;
   entregue: boolean;
   createdAt: string;
 }
+
 
 export default function PedidosPage() {
   const { id } = useParams();
@@ -56,11 +67,14 @@ export default function PedidosPage() {
         {pedidos.map((pedido) => (
           <div key={pedido._id} className={styles.card}>
             <h2>{pedido.cliente.nome}</h2>
-            <p><strong>Endereço:</strong> {pedido.cliente.endereco}</p>
-            <p><strong>Telefone:</strong> {pedido.cliente.telefone}</p>
-            <p><strong>CPF:</strong> {pedido.cliente.cpf}</p>
-            <p><strong>Forma de Pagamento:</strong> {pedido.cliente.formaPagamento}</p>
-            <p><strong>Total:</strong> R$ {pedido.total.toFixed(2)}</p>
+            {pedido.itens.map((item, index) => (
+              <div key={index}>
+                <p><strong>Pizza:</strong> {item.pizzaId.nome}</p>
+                <p><strong>Preço:</strong> R$ {item.pizzaId.preco.toFixed(2)}</p>
+                <p><strong>Quantidade:</strong> {item.quantidade}</p>
+              </div>
+            ))}
+
             <p>
               <strong>Status:</strong>{" "}
               {pedido.entregue ? (

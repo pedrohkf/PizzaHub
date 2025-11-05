@@ -34,18 +34,23 @@ exports.listarPedidos = async (req, res) => {
 };
 
 exports.listarPedidosPorPizzaria = async (req, res) => {
-  try {
-    const { pizzariaId } = req.params;
-    const pedidos = await Pedido.find({ pizzariaId })
-      .sort({ createdAt: -1 })
-      .populate('itens.pizzaId')
-      .lean();
+  const { pizzariaId } = req.params;
 
-    res.json(pedidos);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Erro ao listar pedidos da pizzaria" });
-  }
+  const pedidos = await Pedido.find({ pizzariaId }).sort({ createdAt: -1 }).lean();
+  const cardapio = await Cardapio.findOne({ userId: pizzariaId }).lean();
+
+  const pedidosComPizzas = pedidos.map(pedido => ({
+    ...pedido,
+    itens: pedido.itens.map(item => {
+      const categoria = cardapio.categorias.find(c =>
+        c.pizzas.some(p => String(p._id) === String(item.pizzaId))
+      );
+      const pizza = categoria?.pizzas.find(p => String(p._id) === String(item.pizzaId));
+      return { ...item, pizza };
+    })
+  }));
+
+  res.json(pedidosComPizzas);
 };
 
 exports.atualizarEntrega = async (req, res) => {
