@@ -31,6 +31,7 @@ export default function PedidosPage() {
       try {
         const res = await fetch(`https://pizza-hub-lime.vercel.app/api/pedidos/pizzaria/${id}`);
         const data = await res.json();
+        console.log(data)
         setPedidos(data);
       } catch (err) {
         console.error("Erro ao carregar pedidos:", err);
