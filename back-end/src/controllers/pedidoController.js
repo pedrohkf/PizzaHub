@@ -35,24 +35,39 @@ exports.listarPedidos = async (req, res) => {
 };
 
 exports.listarPedidosPorPizzaria = async (req, res) => {
-  const { pizzariaId } = req.params;
+  try {
+    const { pizzariaId } = req.params;
 
-  const pedidos = await Pedido.find({ pizzariaId }).sort({ createdAt: -1 }).lean();
-  const cardapio = await Cardapio.findOne({ userId: pizzariaId }).lean();
+    const pedidos = await Pedido.find({ pizzariaId }).sort({ createdAt: -1 }).lean();
+    const cardapio = await Cardapio.findOne({ userId: pizzariaId }).lean();
 
-  const pedidosComPizzas = pedidos.map(pedido => ({
-    ...pedido,
-    itens: pedido.itens.map(item => {
-      const categoria = cardapio.categorias.find(c =>
-        c.pizzas.some(p => String(p._id) === String(item.pizzaId))
-      );
-      const pizza = categoria?.pizzas.find(p => String(p._id) === String(item.pizzaId));
-      return { ...item, pizza };
-    })
-  }));
+    if (!cardapio) {
+      return res.status(404).json({ message: "Cardápio não encontrado para essa pizzaria." });
+    }
 
-  res.json(pedidosComPizzas);
+    if (!cardapio.categorias || !Array.isArray(cardapio.categorias)) {
+      return res.status(400).json({ message: "Cardápio sem categorias cadastradas." });
+    }
+
+    const pedidosComPizzas = pedidos.map(pedido => ({
+      ...pedido,
+      itens: pedido.itens.map(item => {
+        const categoria = cardapio.categorias.find(c =>
+          c.pizzas?.some(p => String(p._id) === String(item.pizzaId))
+        );
+        const pizza = categoria?.pizzas?.find(p => String(p._id) === String(item.pizzaId));
+        return { ...item, pizza };
+      })
+    }));
+
+    res.json(pedidosComPizzas);
+
+  } catch (err) {
+    console.error("Erro ao listar pedidos:", err);
+    res.status(500).json({ message: "Erro ao listar pedidos da pizzaria" });
+  }
 };
+
 
 exports.atualizarEntrega = async (req, res) => {
   try {
