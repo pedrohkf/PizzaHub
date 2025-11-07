@@ -36,8 +36,8 @@ exports.listarPedidos = async (req, res) => {
 
 exports.listarPedidosPorPizzaria = async (req, res) => {
   try {
-    const { pizzariaID } = req.params;
-    const pedidos = await Pedido.find({ pizzariaId: pizzariaID })
+    const { pizzariaId } = req.params;
+    const pedidos = await Pedido.find({ pizzariaID: pizzariaId })
       .lean();
 
     return res.status(200).json(pedidos);
@@ -47,8 +47,6 @@ exports.listarPedidosPorPizzaria = async (req, res) => {
     return res.status(500).json({ message: "Erro ao listar pedidos da pizzaria." });
   }
 };
-
-
 
 exports.atualizarEntrega = async (req, res) => {
   try {

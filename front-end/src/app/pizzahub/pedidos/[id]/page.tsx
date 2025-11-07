@@ -35,7 +35,7 @@ interface Pedido {
   };
   itens: {
     quantidade: number;
-    pizzaId: string; // Agora só o ID
+    pizzaId: string; 
   }[];
   total: number;
   entregue: boolean;
@@ -43,19 +43,19 @@ interface Pedido {
 }
 
 export default function PedidosPage() {
-  const { id } = useParams();
+  const { pizzariaId } = useParams();
   const { user } = useAuth();
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
-  const [cardapio, setCardapio] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id) return;
+    if (!pizzariaId) return;
+    console.log(pizzariaId)
 
     async function carregarDados() {
       try {
         const pedidosRes = await fetch(
-          `https://pizza-hub-lime.vercel.app/api/pedidos/pizzaria/${id}`
+          `https://pizza-hub-lime.vercel.app/api/pedidos/pizzaria/${pizzariaId}`
         );
         const pedidosData = await pedidosRes.json();
 
@@ -73,7 +73,7 @@ export default function PedidosPage() {
     }
 
     carregarDados();
-  }, [id, user?.id]);
+  }, [pizzariaId]);
 
 
   // --- Tratamento visual ---
@@ -94,7 +94,7 @@ export default function PedidosPage() {
             <h2>{pedido.cliente.nome}</h2>
 
             {pedido.itens.map((item, index) => {
-              const pizza = buscarPizzaPorId(item.pizzaId);
+              const pizza = item;
               return (
                 <div key={index} className={styles.item}>
                   <p>
