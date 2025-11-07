@@ -63,27 +63,17 @@ export default function PedidosPage() {
 
     async function carregarDados() {
       try {
-        // --- Buscar pedidos da pizzaria ---
         const pedidosRes = await fetch(
-          `https://pizza-hub-lime.vercel.app/api/pedidos/${id}`
+          `https://pizza-hub-lime.vercel.app/api/pedidos/pizzaria/${id}/${user?.id}`
         );
         const pedidosData = await pedidosRes.json();
 
         console.log("pedidosData:", pedidosData);
 
-        // Garante que sempre seja array
         const listaPedidos = Array.isArray(pedidosData)
           ? pedidosData
           : pedidosData.pedidos || [];
-
-        // --- Buscar cardápio ---
-        const cardapioRes = await fetch(
-          `https://pizza-hub-lime.vercel.app/api/cardapio/${user?.id}`
-        );
-        const cardapioData = await cardapioRes.json();
-
         setPedidos(listaPedidos);
-        setCardapio(cardapioData.categorias || []);
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
       } finally {
@@ -93,6 +83,7 @@ export default function PedidosPage() {
 
     carregarDados();
   }, [id, user?.id]);
+
 
   // --- Tratamento visual ---
 

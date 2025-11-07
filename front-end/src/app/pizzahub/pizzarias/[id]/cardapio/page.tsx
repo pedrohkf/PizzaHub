@@ -110,10 +110,16 @@ export default function CardapiosPage() {
         });
 
         // Transformar objeto em array de itens
-        const itens = Object.entries(groupedItems).map(([pizzaId, quantidade]) => ({
-            pizzaId,
-            quantidade
-        }));
+        const itens = Object.entries(groupedItems).map(([pizzaId, quantidade]) => {
+            const pizza = cart.find(p => p._id === pizzaId);
+            return {
+                pizzaId,
+                nome: pizza?.nome,
+                preco: pizza?.precoMedia,
+                quantidade
+            };
+        });
+
 
         // 3️⃣ Calcular o total do pedido
         const total = cart.reduce((sum, pizza) => sum + pizza.precoMedia, 0);
@@ -121,9 +127,8 @@ export default function CardapiosPage() {
         // 4️⃣ Montar o objeto do pedido
         const pedido = {
             cliente: { nome: nomeCliente, endereco, telefone, cpf, formaPagamento },
-            itens,
+            itens: itens,
             total,
-            pizzariaId: id
         };
 
         try {
