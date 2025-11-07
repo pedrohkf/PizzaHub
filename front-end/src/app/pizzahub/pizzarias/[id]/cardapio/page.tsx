@@ -133,10 +133,6 @@ export default function CardapiosPage() {
         };
 
         try {
-            // 5️⃣ Enviar para o backend
-            console.log("Pedido enviado:", pedido);
-
-
             const res = await fetch("https://pizza-hub-lime.vercel.app/api/pedidos", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

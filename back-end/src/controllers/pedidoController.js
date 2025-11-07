@@ -5,8 +5,6 @@ exports.criarPedido = async (req, res) => {
   try {
     const { cliente, itens, total, pizzariaId } = req.body;
 
-    console.log("Corpo recebido:", req.body);
-
     if (!cliente || !itens || !total || !pizzariaId) {
       return res.status(400).json({ message: "Campos obrigatórios faltando!" });
     }
@@ -38,33 +36,12 @@ exports.listarPedidos = async (req, res) => {
 
 exports.listarPedidosPorPizzaria = async (req, res) => {
   try {
-    const { userID, pizzariaID } = req.params;
+    const { pizzariaID } = req.params;
+    const pedidos = await Pedido.find({ pizzariaId: pizzariaID })
+      .populate("itens.pizzaId")
+      .lean();
 
-    const pedidos = await Pedido.find({ pizzariaId: pizzariaID }).lean();
-    const cardapio = await Cardapio.findOne({ userId: userID }).lean();
-
-    if (!cardapio) {
-      return res.status(404).json({ message: "Cardápio não encontrado para essa pizzaria." });
-    }
-
-    if (!Array.isArray(cardapio.categorias)) {
-      return res.status(400).json({ message: "Cardápio sem categorias cadastradas." });
-    }
-
-    const pedidosComPizzas = pedidos.map(pedido => {
-      const itensComPizzas = pedido.itens.map(item => {
-        const categoria = cardapio.categorias.find(c =>
-          c.pizzas?.some(p => String(p._id) === String(item.pizzaId))
-        );
-        const pizza = categoria?.pizzas?.find(p => String(p._id) === String(item.pizzaId));
-
-        return { ...item, pizza: pizza || null };
-      });
-
-      return { ...pedido, itens: itensComPizzas };
-    });
-
-    return res.status(200).json(pedidosComPizzas);
+    return res.status(200).json(pedidos);
 
   } catch (err) {
     console.error("Erro ao listar pedidos:", err);
