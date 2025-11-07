@@ -15,7 +15,7 @@ const PedidoSchema = new Schema({
   },
   itens: [
     {
-      pizzaId: { type: Schema.Types.ObjectId, ref: "Pizza", required: true },
+      pizzaID: { type: Schema.Types.ObjectId, ref: "Pizza", required: true },
       nome: {type: String, required: true},
       preco: {type: String, required: true},
       quantidade: { type: Number, required: true, default: 1 }
