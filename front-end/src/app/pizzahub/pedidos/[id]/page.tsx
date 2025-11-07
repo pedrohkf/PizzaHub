@@ -49,41 +49,77 @@ export default function PedidosPage() {
     carregarDados();
   }, [pizzariaId]);
 
+  async function atualizarStatus(id: string, entregue: boolean) {
+    try {
+      console.log(id, entregue)
+
+      const res = await fetch(`https://pizza-hub-lime.vercel.app/api/pedidos/entrega/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ entregue }),
+      });
+
+      const data = await res.json();
+      console.log("Atualizado:", data);
+
+      // Atualiza o estado local (para não precisar recarregar a página)
+      setPedidos((prev) =>
+        prev.map((p) => (p._id === id ? { ...p, entregue } : p))
+      );
+    } catch (err) {
+      console.error("Erro ao atualizar status:", err);
+    }
+  }
+
+
   return (
     <div className={styles.container}>
       <SideMenu />
-      <h1>Pedidos da Pizzaria</h1>
-
       <div className={styles.list}>
-        {pedidos.map((pedido) => (
-          <div key={pedido._id} className={styles.card}>
-            <h2>{pedido.cliente.nome}</h2>
+        <h1>Pedidos da Pizzaria</h1>
 
-            {pedido.itens.map((item, i) => (
-              <div key={i}>
-                <p>Pizza: {item.nome}</p>
-                <p>Preço: R$ {Number(item.preco).toFixed(2)}</p>
-                <p>Quantidade: {item.quantidade}</p>
+        <div className={styles.pedidos}>
+          {pedidos.map((pedido) => (
+            <div key={pedido._id} className={styles.card}>
+              <h2>{pedido.cliente.nome}</h2>
+
+              <p className={styles.formaPagamento}>
+                💳 {pedido.cliente.formaPagamento.toUpperCase()}
+              </p>
+
+              {pedido.itens.map((item, i) => (
+                <div key={i} className={styles.item}>
+                  <p><strong>{item.nome} | x{item.quantidade}</strong></p>
+                  <p className={styles.quantidade}></p>
+                  <p className={styles.preco}>R$ {Number(item.preco).toFixed(2)}</p>
+                </div>
+              ))}
+
+              <p className={styles.total}>Total: R$ {pedido.total.toFixed(2)}</p>
+
+              <div className={styles.status}>
+                <strong className={
+                  pedido.entregue
+                    ? `${styles.statusText} ${styles.statusEntregue}`
+                    : `${styles.statusText} ${styles.statusPendente}`
+                }>Status: {pedido.entregue ? "Entregue" : "Pendente"}</strong>
+
+                <button
+                  onClick={() => atualizarStatus(pedido._id, !pedido.entregue)}
+                  className={styles.btnStatus}
+                >
+                  {pedido.entregue ? "Marcar como Pendente" : "Marcar como Entregue"}
+                </button>
               </div>
-            ))}
 
-            <p>Total: R$ {pedido.total.toFixed(2)}</p>
 
-            <p>
-              <strong>Status:</strong>{" "}
-              {pedido.entregue ? (
-                <span className={styles.entregue}>Entregue</span>
-              ) : (
-                <span className={styles.pendente}>Pendente</span>
-              )}
-            </p>
+              <p className={styles.data}>
+                📅 {new Date(pedido.createdAt).toLocaleString("pt-BR")}
+              </p>
+            </div>
 
-            <p>
-              <strong>Data:</strong>{" "}
-              {new Date(pedido.createdAt).toLocaleString("pt-BR")}
-            </p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,51 +1,157 @@
 .container {
   display: flex;
-  padding: 2rem;
-  color: #fff;
-  background: #111;
+  background: #fff7f0;
+  /* fundo quente, lembra forno a lenha */
+  color: #4a2c2a;
+  /* marrom escuro */
   min-height: 100vh;
-}
-
-.container h1 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
+  font-family: "Poppins", sans-serif;
 }
 
 .list {
+  padding: 2rem;
+}
+
+.list h1 {
+  text-align: center;
+  color: #b52e1e;
+  /* vermelho terroso, lembra forno */
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin: 1rem auto 3rem auto;
+  /* respiro superior e inferior */
+  border-bottom: 4px solid #ffb347;
+  /* linha laranja para foco */
+  width: fit-content;
+  /* ajusta a linha ao tamanho do texto */
+  padding-bottom: 0.5rem;
+}
+
+.pedidos {
+  padding: 0 2rem 4rem 2rem;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.5rem;
 }
 
 .card {
-  background: #1c1c1c;
-  border-radius: 12px;
-  padding: 1.2rem;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  max-width: 28rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(100, 50, 20, 0.1);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  transition: transform 0.2s ease;
+  width: 28rem;
+  height: 28rem;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
 }
 
 .card h2 {
+  color: #c0392b;
+  /* vermelho queimado */
+  font-weight: 800;
   font-size: 1.4rem;
-  margin-bottom: 0.5rem;
+}
+
+.card p strong {
+  color: #b52e1e;
+  font-weight: 700;
 }
 
 .card p {
-  margin: 0.3rem 0;
+  margin: 0.2rem 0;
+  line-height: 1.5;
 }
 
+.total {
+  font-size: 1.3rem;
+  color: #e67e22;
+  /* laranja que salta aos olhos */
+  font-weight: 800;
+  margin-top: 1rem;
+  border-top: 2px dashed #f5c16c;
+  padding-top: 0.5rem;
+}
+
+
 .entregue {
-  color: #4caf50;
-  font-weight: bold;
+  color: #27ae60;
+  /* verde sucesso */
+  font-weight: 700;
 }
 
 .pendente {
-  color: #ff9800;
-  font-weight: bold;
+  color: #e74c3c;
+  /* vermelho de alerta */
+  font-weight: 700;
 }
 
-.loading,
-.empty {
-  color: #ccc;
-  text-align: center;
-  margin-top: 3rem;
+
+.formaPagamento {
+  color: #118ab2;
+  font-weight: 600;
+}
+
+.data {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-top: 0.5rem;
+}
+
+.status{
+  display: flex;
+  flex-direction: column;
+}
+
+.btnStatus {
+  background-color: #b52e1e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.btnStatus:hover {
+  background-color: #8c2215;
+}
+
+.statusText {
+  font-weight: 600;
+  margin-left: 0.5rem;
+   transition: color 0.3s ease;
+}
+
+.statusEntregue {
+  color: #27ae60;
+  /* verde sucesso */
+}
+
+.statusPendente {
+  color: #e74c3c;
+  /* vermelho alerta */
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .card h2 {
+    font-size: 1.2rem;
+  }
 }
