@@ -110,10 +110,10 @@ export default function CardapiosPage() {
         });
 
         // Transformar objeto em array de itens
-        const itens = Object.entries(groupedItems).map(([pizzaId, quantidade]) => {
-            const pizza = cart.find(p => p._id === pizzaId);
+        const itens = Object.entries(groupedItems).map(([pizzaID, quantidade]) => {
+            const pizza = cart.find(p => p._id === pizzaID);
             return {
-                pizzaId,
+                pizzaID,
                 nome: pizza?.nome,
                 preco: pizza?.precoMedia,
                 quantidade
@@ -126,11 +126,13 @@ export default function CardapiosPage() {
 
         // 4️⃣ Montar o objeto do pedido
         const pedido = {
-            pizzariaId: id,
             cliente: { nome: nomeCliente, endereco, telefone, cpf, formaPagamento },
             itens: itens,
             total,
+            pizzariaId: id,
         };
+
+        console.log(pedido)
 
         try {
             const res = await fetch("https://pizza-hub-lime.vercel.app/api/pedidos", {
