@@ -126,7 +126,7 @@ export default function CardapiosPage() {
 
         // 4️⃣ Montar o objeto do pedido
         const pedido = {
-            pizzariaID: id,
+            pizzariaId: id,
             cliente: { nome: nomeCliente, endereco, telefone, cpf, formaPagamento },
             itens: itens,
             total,
@@ -134,6 +134,9 @@ export default function CardapiosPage() {
 
         try {
             // 5️⃣ Enviar para o backend
+            console.log("Pedido enviado:", pedido);
+
+
             const res = await fetch("https://pizza-hub-lime.vercel.app/api/pedidos", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
