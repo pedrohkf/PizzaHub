@@ -3,9 +3,9 @@ const Cardapio = require("../models/Cardapio");
 
 exports.criarPedido = async (req, res) => {
   try {
-    const { cliente, itens, total, pizzariaId } = req.body;
+    const { cliente, itens, total } = req.body;
 
-    if (!cliente || !itens || !total || !pizzariaId) {
+    if (!cliente || !itens || !total) {
       return res.status(400).json({ message: "Campos obrigatórios faltando!" });
     }
 
@@ -13,7 +13,6 @@ exports.criarPedido = async (req, res) => {
       cliente,
       itens,
       total,
-      pizzariaId
     });
 
     await pedido.save();
