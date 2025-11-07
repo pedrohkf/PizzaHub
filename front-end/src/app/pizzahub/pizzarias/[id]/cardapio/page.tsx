@@ -6,18 +6,11 @@ import styles from "./cardapio.module.css";
 import { useAuth } from "@/context/AuthContext";
 import Carrinho from "../../../../Components/Carrinho/Carrinho"
 
+import { Pizza } from "@/types/Pizza";
 
-interface Pizza {
-    _id: string;
-    nome: string;
-    descricao: string;
-    precoPequena: number;
-    precoMedia: number;
-    precoGrande: number;
-    imagem: string;
-    destaque: boolean;
-    disponivel: boolean;
-}
+type FormaPagamento = "Pix" | "Cartão" | "Dinheiro";
+
+
 
 interface Categoria {
     nome: string;
@@ -47,7 +40,8 @@ export default function CardapiosPage() {
     const [endereco, setEndereco] = useState("");
     const [telefone, setTelefone] = useState("");
     const [cpf, setCpf] = useState("");
-    const [formaPagamento, setFormaPagamento] = useState<"pix" | "dinheiro" | "cartão">("pix");
+    const [formaPagamento, setFormaPagamento] = useState<FormaPagamento>("Pix");
+
 
     // Carregar carrinho do localStorage
     useEffect(() => {
@@ -65,9 +59,6 @@ export default function CardapiosPage() {
         setCart(prev => [...prev, pizza]);
         alert(`${pizza.nome} foi adicionado ao carrinho!`);
     }
-
-    // Total do carrinho
-    const total = cart.reduce((sum, pizza) => sum + pizza.precoMedia, 0);
 
     // Buscar dados da pizzaria
     useEffect(() => {
@@ -143,7 +134,6 @@ export default function CardapiosPage() {
 
             if (!res.ok) throw new Error("Erro ao criar pedido");
 
-            const data = await res.json();
             alert("Pedido finalizado com sucesso!");
 
             // 6️⃣ Limpar carrinho e modal
@@ -155,7 +145,7 @@ export default function CardapiosPage() {
             setEndereco("");
             setTelefone("");
             setCpf("");
-            setFormaPagamento("pix");
+            setFormaPagamento("Pix");
 
             // 8️⃣ Salvar localmente também (opcional)
             const pedidosSalvos = JSON.parse(localStorage.getItem("pedidos") || "[]");
@@ -242,11 +232,15 @@ export default function CardapiosPage() {
                         <input value={cpf} onChange={e => setCpf(e.target.value)} />
 
                         <label>Forma de Pagamento:</label>
-                        <select value={formaPagamento} onChange={e => setFormaPagamento(e.target.value as any)}>
-                            <option value="pix">PIX</option>
-                            <option value="dinheiro">Dinheiro</option>
-                            <option value="cartão">Cartão</option>
+                        <select
+                            value={formaPagamento}
+                            onChange={e => setFormaPagamento(e.target.value as FormaPagamento)}
+                        >
+                            <option value="Pix">Pix</option>
+                            <option value="Cartão">Cartão</option>
+                            <option value="Dinheiro">Dinheiro</option>
                         </select>
+
 
                         <button onClick={handleConfirmOrder}>Confirmar Pedido</button>
                         <button onClick={() => setIsModalOpen(false)}>Cancelar</button>

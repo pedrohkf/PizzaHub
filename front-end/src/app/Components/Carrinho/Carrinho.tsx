@@ -1,11 +1,9 @@
 // Cart.tsx
 import React from "react";
 import styles from "./Cart.module.css"; // pode criar estilos separados
+import { Pizza } from "@/types/Pizza";
 
-interface Pizza {
-  nome: string;
-  precoMedia: number;
-}
+
 
 interface CartProps {
   cart: Pizza[];
