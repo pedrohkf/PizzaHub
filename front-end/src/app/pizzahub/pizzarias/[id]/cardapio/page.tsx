@@ -126,6 +126,7 @@ export default function CardapiosPage() {
 
         // 4️⃣ Montar o objeto do pedido
         const pedido = {
+            pizzariaID: id,
             cliente: { nome: nomeCliente, endereco, telefone, cpf, formaPagamento },
             itens: itens,
             total,
