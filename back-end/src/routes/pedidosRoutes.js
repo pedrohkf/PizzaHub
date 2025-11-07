@@ -6,7 +6,7 @@ router.post("/", pedidoController.criarPedido);
 
 router.get("/", pedidoController.listarPedidos);
 
-router.get("/pizzaria/:pizzariaId/:userID", pedidoController.listarPedidosPorPizzaria);
+router.get("/pizzaria/:pizzariaId/", pedidoController.listarPedidosPorPizzaria);
 
 router.patch("/entrega/:id", pedidoController.atualizarEntrega);
 

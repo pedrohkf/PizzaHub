@@ -59,12 +59,12 @@ export default function PedidosPage() {
   }
 
   useEffect(() => {
-    if (!id || !user?.id) return;
+    if (!id) return;
 
     async function carregarDados() {
       try {
         const pedidosRes = await fetch(
-          `https://pizza-hub-lime.vercel.app/api/pedidos/pizzaria/${id}/${user?.id}`
+          `https://pizza-hub-lime.vercel.app/api/pedidos/pizzaria/${id}`
         );
         const pedidosData = await pedidosRes.json();
 
