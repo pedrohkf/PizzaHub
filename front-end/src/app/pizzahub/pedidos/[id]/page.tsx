@@ -49,15 +49,6 @@ export default function PedidosPage() {
   const [cardapio, setCardapio] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Função auxiliar para buscar a pizza correspondente
-  function buscarPizzaPorId(pizzaId: string) {
-    for (const categoria of cardapio) {
-      const pizza = categoria.pizzas.find((p) => p._id === pizzaId);
-      if (pizza) return pizza;
-    }
-    return null;
-  }
-
   useEffect(() => {
     if (!id) return;
 

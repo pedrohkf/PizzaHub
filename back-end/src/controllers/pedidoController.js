@@ -38,7 +38,6 @@ exports.listarPedidosPorPizzaria = async (req, res) => {
   try {
     const { pizzariaID } = req.params;
     const pedidos = await Pedido.find({ pizzariaId: pizzariaID })
-      .populate("itens.pizzaId")
       .lean();
 
     return res.status(200).json(pedidos);
