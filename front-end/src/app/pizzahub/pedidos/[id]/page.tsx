@@ -76,51 +76,84 @@ export default function PedidosPage() {
     <div className={styles.container}>
       <SideMenu />
       <div className={styles.list}>
-        <h1>Pedidos da Pizzaria</h1>
+  <h1>Pedidos da Pizzaria</h1>
 
-        <div className={styles.pedidos}>
-          {pedidos.map((pedido) => (
-            <div key={pedido._id} className={styles.card}>
-              <h2>{pedido.cliente.nome}</h2>
+  <div className={styles.tableWrapper}>
+    <table className={styles.table}>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Itens</th>
+          <th>Pagamento</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Data</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
 
-              <p className={styles.formaPagamento}>
-                💳 {pedido.cliente.formaPagamento.toUpperCase()}
-              </p>
+      <tbody>
+        {pedidos.map((pedido) => (
+          <tr key={pedido._id}>
+            {/* CLIENTE */}
+            <td>{pedido.cliente.nome}</td>
 
+            {/* ITENS */}
+            <td>
               {pedido.itens.map((item, i) => (
-                <div key={i} className={styles.item}>
-                  <p><strong>{item.nome} | x{item.quantidade}</strong></p>
-                  <p className={styles.quantidade}></p>
-                  <p className={styles.preco}>R$ {Number(item.preco).toFixed(2)}</p>
+                <div key={i}>
+                  <strong>{item.nome}</strong> × {item.quantidade}  
+                  — R$ {Number(item.preco).toFixed(2)}
                 </div>
               ))}
+            </td>
 
-              <p className={styles.total}>Total: R$ {pedido.total.toFixed(2)}</p>
+            {/* PAGAMENTO */}
+            <td>
+              <span className={styles.pagamento}>
+                {pedido.cliente.formaPagamento.toUpperCase()}
+              </span>
+            </td>
 
-              <div className={styles.status}>
-                <strong className={
+            {/* TOTAL */}
+            <td>
+              <strong>R$ {pedido.total.toFixed(2)}</strong>
+            </td>
+
+            {/* STATUS */}
+            <td>
+              <span
+                className={
                   pedido.entregue
-                    ? `${styles.statusText} ${styles.statusEntregue}`
-                    : `${styles.statusText} ${styles.statusPendente}`
-                }>Status: {pedido.entregue ? "Entregue" : "Pendente"}</strong>
+                    ? styles.statusEntregue
+                    : styles.statusPendente
+                }
+              >
+                {pedido.entregue ? "Entregue" : "Pendente"}
+              </span>
+            </td>
 
-                <button
-                  onClick={() => atualizarStatus(pedido._id, !pedido.entregue)}
-                  className={styles.btnStatus}
-                >
-                  {pedido.entregue ? "Marcar como Pendente" : "Marcar como Entregue"}
-                </button>
-              </div>
+            {/* DATA */}
+            <td>{new Date(pedido.createdAt).toLocaleString("pt-BR")}</td>
 
+            {/* AÇÃO */}
+            <td>
+              <button
+                onClick={() =>
+                  atualizarStatus(pedido._id, !pedido.entregue)
+                }
+                className={styles.btnStatus}
+              >
+                {pedido.entregue ? "Marcar Pendente" : "Marcar Entregue"}
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
 
-              <p className={styles.data}>
-                📅 {new Date(pedido.createdAt).toLocaleString("pt-BR")}
-              </p>
-            </div>
-
-          ))}
-        </div>
-      </div>
     </div>
   );
 }

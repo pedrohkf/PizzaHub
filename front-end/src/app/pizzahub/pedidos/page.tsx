@@ -24,9 +24,6 @@ export default async function Page() {
       <div className={styles.content}>
         <div className={styles.header}>
           <h1>Pedidos por Pizzaria</h1>
-          <Link href="pizzarias/create" className={styles.addBtn}>
-            + pizzaria
-          </Link>
         </div>
         <div className={styles.list}>
           {pizzarias.length > 0 ? (
