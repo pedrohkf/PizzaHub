@@ -1,15 +1,19 @@
 .container {
   display: flex;
-  background-color: #FFF9F5;
   min-height: 100vh;
-  color: #2B2B2B;
+  width: 100%;
+  background-color: var(--bg-cream);
+  color: var(--text-normal);
   font-family: "Poppins", sans-serif;
 }
 
 .content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-width: 0;
+  padding-bottom: 2rem;
 }
 
 .header {
@@ -17,33 +21,45 @@
   justify-content: space-between;
   align-items: center;
   margin: 2rem 3rem;
-  border-bottom: 2px solid rgba(170, 32, 20, 0.2);
   padding-bottom: 1rem;
+
+  border-bottom: 2px solid rgba(140, 3, 14, 0.15);
 }
 
 .header h1 {
   font-size: 2rem;
-  font-weight: 600;
-  color: #AA2014;
+  font-weight: 700;
+  color: var(--text-strong);
 }
 
 .addBtn {
-  background: linear-gradient(135deg, #AA2014, #E5391B);
-  color: #fff;
+  background: var(--btn-primary);
+  color: var(--text-inverse);
+
   font-weight: 600;
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius);
   cursor: pointer;
+
   transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(170, 32, 20, 0.3);
+  box-shadow: 0 4px 10px rgba(217, 43, 4, 0.35);
+
   text-decoration: none;
 }
 
 .addBtn:hover {
-  background: linear-gradient(135deg, #E5391B, #AA2014);
+  background: var(--btn-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(170, 32, 20, 0.4);
+  box-shadow: 0 6px 14px rgba(217, 43, 4, 0.45);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+
+  padding: 2rem 3rem;
 }
 
 .cardLink {
@@ -52,30 +68,18 @@
 }
 
 .card {
-  transition: all 0.25s ease;
-  cursor: pointer;
-}
+  display: flex;
+  flex-direction: column;
 
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-
-.list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem 3rem;
-}
-
-.card {
-  background-color: #F5E6CC;
-  border-radius: 16px;
+  background-color: var(--bg-light);
+  border-radius: var(--radius);
   padding: 1.5rem;
-  box-shadow: 0 4px 8px rgba(43, 43, 43, 0.1);
-  border: 1px solid rgba(170, 32, 20, 0.1);
+
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-soft);
   transition: all 0.3s ease;
+
+  cursor: pointer;
   position: relative;
   overflow: hidden;
 }
@@ -87,55 +91,95 @@
   left: 0;
   width: 6px;
   height: 100%;
-  background-color: #AA2014;
-  border-top-left-radius: 16px;
-  border-bottom-left-radius: 16px;
+  background-color: var(--red-strong);
+  border-top-left-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 14px rgba(43, 43, 43, 0.15);
+  box-shadow: var(--shadow-strong);
 }
 
 .card h2 {
   font-size: 1.4rem;
-  color: #AA2014;
+  color: var(--red-strong);
   margin-bottom: 0.5rem;
 }
 
 .card p {
   font-size: 0.95rem;
   margin: 0.25rem 0;
-  color: #2B2B2B;
+  color: var(--text-normal);
 }
 
 .card strong {
-  color: #D9A441;
+  color: var(--orange-strong);
+}
+
+.mainArea {
+  text-decoration: none;
+  padding: 1rem;
+  color: #2B2B2B;
+  display: block;
+}
+
+.mainArea h2 {
+  color: #D92B04;
+  margin-bottom: .4rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: .1rem .5rem;
+}
+
+.actions a svg:hover {
+  transform: scale(1.15);
+  fill: #8C030E;
 }
 
 .empty {
   text-align: center;
-  color: #AA2014;
+  color: var(--red-strong);
   font-weight: 500;
   margin-top: 3rem;
   font-size: 1.2rem;
-  opacity: 0.8;
+  opacity: 0.75;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .header {
+    margin: 1.5rem 1.5rem;
     flex-direction: column;
     align-items: flex-start;
-    margin: 1.5rem;
+    gap: 1rem;
   }
 
   .addBtn {
-    margin-top: 1rem;
-    align-self: flex-end;
+    align-self: stretch;
+    text-align: center;
   }
 
   .list {
     padding: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .content {
+    padding-bottom: 1rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .header h1 {
+    font-size: 1.4rem;
   }
 }

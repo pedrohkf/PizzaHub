@@ -3,61 +3,75 @@ import styles from './SideMenu.module.css'
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react'
+import Dashboard from "../../../../public/imgs/Dashboard";
+import Pizzaria from "../../../../public/imgs/Pizzaria";
+import Orders from "../../../../public/imgs/Orders";
+import Help from "../../../../public/imgs/Help";
+import Exit from "../../../../public/imgs/Exit";
 
+import Menu from "../../../../public/imgs/Menu";
 
 const menuItems = [
-    { to: "dashboard", label: "Dashboard", icon: "" },
-    { to: "pizzarias", label: "Pizzarias", icon: "" },
-    { to: "pedidos", label: "Pedidos", icon: "" },
-    { to: "help", label: "Ajuda", icon: "" },
+    { to: "dashboard", label: "Dashboard", icon: <Dashboard /> },
+    { to: "pizzarias", label: "Pizzarias", icon: <Pizzaria /> },
+    { to: "pedidos", label: "Pedidos", icon: <Orders /> },
+    { to: "help", label: "Ajuda", icon: <Help /> },
 ];
 
 export default function SideMenu() {
     const [activeLink, setActiveLink] = useState<string>("/dashboard");
-    const [isSmallScreen, setIsSmallScreen] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
-        const checkScreenSize = () => setIsSmallScreen(window.innerWidth <= 500);
+        const check = () => setIsMobile(window.innerWidth <= 500);
+        check();
 
-        checkScreenSize();
+        window.addEventListener("resize", check);
+        return () => window.removeEventListener("resize", check);
+    }, []);
 
-        window.addEventListener("resize", checkScreenSize);
-        return () => window.removeEventListener("resize", checkScreenSize);
-    }, [])
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-
-    const handleClick = (event: React.MouseEvent<HTMLLIElement>) => {
-        event.preventDefault()
-        const clickedPath = event.currentTarget.getAttribute("href");
-
-        if (clickedPath) setActiveLink(clickedPath);
+    const handleItemClick = (path: string) => {
+        setActiveLink(path);
+        if (isMobile) setIsMenuOpen(false);
     };
+
+    const shouldShowMenu = isMobile ? isMenuOpen : true;
 
     return (
         <div className={styles.container}>
-            <div onClick={() => setIsSmallScreen(!isSmallScreen)}>
-                <div className={isSmallScreen ? styles.menuBarDesactived : styles.menuBarActived} />
-            </div>
+            {isMobile && (
+                <button className={styles.menuButton} onClick={toggleMenu}>
+                    <Menu />
+                </button>
+            )}
 
-            <div className={isSmallScreen ? styles.menuLayoutDesactived : styles.menuLayout}>
+            <nav className={shouldShowMenu ? styles.menuOpen : styles.menuClosed}>
                 <ul className={styles.menu}>
                     {menuItems.map((item) => (
                         <li
                             key={item.to}
                             className={activeLink === item.to ? styles.active : ""}
-                            onClick={handleClick}
+                            onClick={() => handleItemClick(item.to)}
                         >
-                            <Link href={"/pizzahub/" + item.to} className={styles.icon}>{item.icon}</Link>
-                            <Link href={"/pizzahub/" + item.to} className={styles.text}>
+                            <Link href={`/pizzahub/${item.to}`} className={styles.icon}>
+                                {item.icon}
+                            </Link>
+
+                            <Link href={`/pizzahub/${item.to}`} className={styles.text}>
                                 {item.label}
                             </Link>
                         </li>
                     ))}
                 </ul>
+
                 <ul className={styles.exit}>
+                    <Exit />
                     <li>Sair</li>
                 </ul>
-            </div>
+            </nav>
         </div >
     );
 }

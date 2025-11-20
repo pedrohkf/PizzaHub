@@ -35,19 +35,21 @@ export default async function Page() {
         <div className={styles.list}>
           {pizzarias.length > 0 ? (
             pizzarias.map((pizzaria: Pizzaria) => (
-              <Link href={`pizzarias/${pizzaria._id}`} key={pizzaria._id} className={styles.cardLink}>
-                <div className={styles.card}>
+              <div className={styles.card} key={pizzaria._id}>
+                <Link className={styles.mainArea} href={`pizzarias/${pizzaria._id}`} target="_blank">
                   <h2>{pizzaria.name}</h2>
                   <p><strong>Telefone:</strong> {pizzaria.phone}</p>
                   <p><strong>Endereço:</strong> {pizzaria.street}, {pizzaria.numberHouse}</p>
                   <p><strong>Bairro:</strong> {pizzaria.neighborhood}</p>
                   <p><strong>Estado:</strong> {pizzaria.state}</p>
                   <p><strong>Taxa de entrega:</strong> R$ {pizzaria.deliveryFee}</p>
-                   <Link href={`pizzarias/${pizzaria._id}/edit`}><Edit /></Link>
-                   <Link href={`pizzarias/${pizzaria._id}`}><Share /></Link>
-                   <DeleteButton pizzariaId={pizzaria._id} />
+                </Link>
+                <div className={styles.actions}>
+                  <Link href={`pizzarias/${pizzaria._id}/edit`}><Edit /></Link>
+                  <Link href={`pizzarias/${pizzaria._id}`} target="_blank"><Share /></Link>
+                  <DeleteButton pizzariaId={pizzaria._id} />
                 </div>
-              </Link>
+              </div>
             ))
           ) : (
             <p className={styles.empty}>Nenhuma pizzaria cadastrada ainda 🍕</p>

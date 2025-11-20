@@ -314,7 +314,7 @@ export default function EditPage() {
         <section id="contato" className={styles.contato}>
           <h2>Contato</h2>
           <div className={styles.socialLinks}>
-            {instagram && <a href={instagram} className={styles.socialBtn}>Instagram</a>}
+            {instagram && <a href={instagram} className={styles.socialBtn} target="_black">Instagram</a>}
             {whatsapp && <a
               href={'https://wa.me/' + whatsapp + '?text=' + encodeURIComponent('Olá, quero fazer um pedido!')}
               className={styles.socialBtn}
@@ -323,7 +323,7 @@ export default function EditPage() {
             >
               WhatsApp
             </a>}
-            {website && <a href={website} className={styles.socialBtn}>Website</a>}
+            {website && <a href={website} className={styles.socialBtn}  target="_black">Website</a>}
           </div>
         </section>
       </section >

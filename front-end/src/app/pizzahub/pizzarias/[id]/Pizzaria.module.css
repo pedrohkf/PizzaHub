@@ -1,334 +1,307 @@
-.editorPage {
-    width: 100%;
-    display: flex;
-    color: #f6f6f6;
-    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-}
-
-/* mobile fallback */
-@media (max-width: 980px) {
-    .editorPage {
-        grid-template-columns: 1fr;
-        padding: 1rem;
-    }
-}
-
-/* === GERAL === */
 .previewSection {
-    font-family: 'Poppins', sans-serif;
-    color: #333;
-    line-height: 1.6;
-    background: #fdfcf8;
-    border-radius: 10px;
-    width: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-normal);
+  line-height: 1.6;
+  background: var(--bg-light);
+  border-radius: var(--radius);
 }
 
 /* === HEADER === */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 3rem;
-    position: sticky;
-    top: 0;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    z-index: 100;
-    backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  background: var(--bg-dark);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-soft);
+  z-index: 100;
+  backdrop-filter: blur(8px);
 }
 
 .logoMenu {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .logoMenu img {
-    height: 60px;
-    border-radius: 12px;
-    object-fit: cover;
+  height: 60px;
+  border-radius: var(--radius);
+  object-fit: cover;
 }
 
 .nav a {
-    margin-left: 2rem;
-    text-decoration: none;
-    font-weight: 600;
-    color: #333;
-    position: relative;
-    transition: all 0.3s ease;
+  margin-left: 2rem;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--text-inverse);
+  position: relative;
+  transition: all 0.3s ease;
 }
 
 .nav a::after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 3px;
-    background: #e63946;
-    left: 0;
-    bottom: -4px;
-    transition: width 0.3s ease;
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 3px;
+  background: var(--accent-2);
+  left: 0;
+  bottom: -4px;
+  transition: width 0.3s ease;
 }
 
 .nav a:hover::after {
-    width: 100%;
+  width: 100%;
 }
 
 /* === BANNER === */
 .bannerWrapper {
-    position: relative;
-    width: 100%;
-    height: 550px;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 550px;
+  overflow: hidden;
 }
 
 .bannerWrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1);
-    transition: transform 0.5s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 0.5s ease;
 }
 
 .bannerWrapper:hover img {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .bannerText {
-    position: absolute;
-    bottom: 15%;
-    left: 10%;
-    color: #fff;
-    text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.7);
+  position: absolute;
+  bottom: 15%;
+  left: 10%;
+  color: var(--text-inverse);
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.7);
 }
 
 .bannerText h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
 }
 
 .orderBtn {
-    width: 13rem;
-    background: #e63946;
-    color: rgb(231, 231, 231);
-    font-weight: 700;
-    padding: 1rem 2rem;
-    border-radius: 12px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
+  width: 13rem;
+  background: var(--btn-primary);
+  color: var(--text-inverse);
+  font-weight: 700;
+  padding: 1rem 2rem;
+  border-radius: var(--radius);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
 }
 
 .orderBtn:hover {
-    background: #d62839;
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 10px 25px rgba(230, 57, 70, 0.4);
+  background: var(--btn-primary-hover);
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(217, 43, 4, 0.4);
 }
 
 /* === INFORMAÇÕES === */
 .infoSection {
-    padding: 2rem 3rem;
-    background: #fff5f0;
-    margin: 2rem 0;
-    border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  padding: 2rem 3rem;
+  background: var(--bg-light);
+  margin: 2rem 0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
 }
 
 .infoSection h2 {
-    color: #e63946;
-    font-size: 2rem;
-    margin-bottom: 1rem;
+  color: var(--accent-2);
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
 .infoSection p {
-    margin: 0.6rem 0;
-    font-size: 1.05rem;
+  margin: 0.6rem 0;
+  font-size: 1.05rem;
+  color: var(--text-normal);
 }
 
 /* === GALERIA === */
 .gallerySection {
-    padding: 4rem;
+  padding: 4rem 2rem;
 }
 
 .galleryGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
 }
 
 .galleryItem img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 12px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .galleryItem img:hover {
-    transform: scale(1.08);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transform: scale(1.08);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* === CARDÁPIO === */
 .cardapioPreview {
-    padding: 2rem 3rem;
+  padding: 2rem 3rem;
 }
 
 .categoryCard {
-    margin-bottom: 2.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .categoryCard h3 {
-    font-size: 1.8rem;
-    color: #e63946;
-    margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: var(--accent-2);
+  margin-bottom: 1rem;
 }
 
 .pizzasGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
 }
 
 .pizzaCard {
-    background: #fff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
+  background: var(--bg-cream);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .pizzaCard h4 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin: 0.8rem 1rem 0.3rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0.8rem 1rem 0.3rem;
+  color: var(--text-strong);
 }
 
 .pizzaCard p {
-    flex-grow: 1;
-    margin: 0 1rem 1rem;
-    color: #555;
+  flex-grow: 1;
+  margin: 0 1rem 1rem;
+  color: var(--text-normal);
 }
 
 .priceAndBuy {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.8rem 1rem 1rem;
-    border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem 1rem;
+  border-top: 1px solid var(--border-light);
 }
 
 .buyBtn {
-    background: #ff7f50;
-    color: #fff;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 700;
-    transition: all 0.3s ease;
+  background: var(--btn-secondary);
+  color: var(--text-inverse);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s ease;
 }
 
 .buyBtn:hover {
-    background: #ff5722;
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 18px rgba(255, 87, 34, 0.4);
+  background: var(--btn-secondary-hover);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(242, 116, 5, 0.4);
 }
 
 /* === SOBRE === */
 .sobre {
-    padding: 2rem 3rem;
-    margin-top: 2rem;
+  padding: 2rem 3rem;
+  margin-top: 2rem;
 }
 
 .sobre h2 {
-    font-size: 2rem;
-    color: #e63946;
-    margin-bottom: 1rem;
+  font-size: 2rem;
+  color: var(--accent-2);
+  margin-bottom: 1rem;
 }
 
 .sobre p {
-    font-size: 1.1rem;
-    color: #555;
-    line-height: 1.8;
+  font-size: 1.1rem;
+  color: var(--text-normal);
+  line-height: 1.8;
 }
 
 /* === CONTATO === */
 .contato {
-    padding: 2rem 3rem;
-    margin-top: 2rem;
+  padding: 2rem 3rem;
+  margin-top: 2rem;
 }
 
 .socialLinks a {
-    display: inline-block;
-    margin-right: 1rem;
-    padding: 0.7rem 1.5rem;
-    border-radius: 12px;
-    background: #e63946;
-    color: white;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.3s ease;
+  display: inline-block;
+  margin-right: 1rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--radius);
+  background: var(--btn-primary);
+  color: var(--text-inverse);
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .socialLinks a:hover {
-    background: #d62839;
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 18px rgba(230, 57, 70, 0.4);
+  background: var(--btn-primary-hover);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(217, 43, 4, 0.4);
 }
 
+@media (max-width: 1024px) {
+  .pizzasGrid, .galleryGrid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
 
+  .bannerText h1 {
+    font-size: 2.2rem;
+  }
 
-/* === RESPONSIVO === */
-@media (max-width: 1000px) {
-    .editorPage {
-        flex-direction: column;
-        align-items: center;
-        row-gap: 3rem;
-    }
-
-    .formSection {
-        width: 80%;
-        height: 180vh;
-    }
+  .header {
+    padding: 1rem 1.5rem;
+  }
 }
-
 
 @media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    padding: 1rem 1rem;
+  }
 
-    .infoSection,
-    .cardapioPreview,
-    .sobre,
-    .contato {
-        padding: 1.5rem;
-    }
+  .nav a {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+  }
 
-    .pizzasGrid {
-        grid-template-columns: 1fr;
-    }
+  .bannerText {
+    bottom: 10%;
+    left: 5%;
+  }
 
-    .bannerText h1 {
-        font-size: 2rem;
-    }
+  .bannerText h1 {
+    font-size: 1.8rem;
+  }
 
-    .bannerText p {
-        font-size: 1rem;
-    }
-
-    .header {
-        padding: 1rem;
-    }
-
-    .logoMenu img {
-        width: 2.5rem;
-        height: 2.5rem;
-    }
-
-    .nav a {
-        margin-left: 0.5rem;
-    }
+  .pizzasGrid, .galleryGrid {
+    grid-template-columns: 1fr;
+  }
 }

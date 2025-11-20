@@ -11,10 +11,10 @@ export default async function Page() {
     const pizzaria = pizzarias[0];
 
     return (
-        <div style={{ display: "flex" }}>
+        <div className={styles.container}>
             <SideMenu />
-            <div className={styles.container}>
-                <h1 style={{ marginBottom: "20px" }}>Dashboard</h1>
+            <div className={styles.content}>
+                <h1>Dashboard</h1>
 
                 <DashboardStats pizzariaId={pizzaria._id} />
                 <div className={styles.graphs}>

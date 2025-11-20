@@ -1,28 +1,41 @@
 * {
   margin: 0;
   padding: 0;
-   box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 :root {
-  --bg-dark: #aa2014;
-  --bg-1: #161414;
-  /* parede escura */
-  --bg-2: #221f1f;
-  /* variação */
-  --card: rgba(255, 255, 255, 0.06);
-  --muted: rgba(255, 255, 255, 0.75);
-  --accent-1: #FF7A00;
-  /* vermelho/forno */
-  --accent-2: #FFB84D;
-  /* dourado */
-  --glass: rgba(255, 255, 255, 0.04);
-  --glass-strong: rgba(255, 255, 255, 0.07);
-  --success: #46C77A;
-  --danger: #FF5C5C;
-  --radius: 14px;
-  --soft-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  --bg-cream: #F9F5F0;
+  --bg-light: #FFF8F0;
+  --bg-dark: #4A0004;
+
+  --text-strong: #8C030E;
+  --text-normal: #4A4A4A;
+  --text-light: #7A7A7A;
+  --text-inverse: #FFF8F0;
+
+  --red-strong: #8C030E;
+  --green-dark: #2E5902;
+  --green-light: #4F7A03;
+  --orange-strong: #F27405;
+  --red-cta: #D92B04;
+
+  --btn-primary: var(--red-cta);
+  --btn-primary-hover: #B82503;
+  --btn-secondary: var(--orange-strong);
+  --btn-secondary-hover: #C65F04;
+
+  --accent-1: var(--orange-strong);
+  --accent-2: var(--red-strong);
+  --accent-3: var(--green-light);
+
+  --border-light: rgba(0, 0, 0, 0.08);
+  --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-strong: 0 6px 26px rgba(0, 0, 0, 0.15);
+
+  --radius: 12px;
 }
+
 
 @font-face {
   font-family: "Marcellus";

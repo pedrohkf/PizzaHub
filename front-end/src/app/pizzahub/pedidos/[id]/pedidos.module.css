@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  background: #f4f4f4;
+  background-color: var(--bg-cream);
   min-height: 100vh;
 }
 
@@ -10,84 +10,105 @@
 }
 
 .list h1 {
-  font-size: 30px;
+  font-size: 2rem;
   margin-bottom: 25px;
-  color: var(--bg-dark);
+  color: var(--text-strong);
 }
 
-/* TABLE WRAPPER */
 .tableWrapper {
-  background: #fff;
+  width: 100%;
+  overflow-x: auto;
+  background-color: var(--bg-light);
   padding: 0.5rem;
   border-radius: var(--radius);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  overflow-x: auto;
-  border: 1px solid rgba(0,0,0,0.07);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-light);
 }
 
-/* TABLE */
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 15px;
-  color: var(--bg-1);
+  font-size: 0.95rem;
+  color: var(--text-normal);
 }
 
-/* HEADERS */
+.table th, .table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-light);
+}
+
 .table th {
-  text-align: left;
-  padding: 14px 12px;
-  background: #fafafa;
+  background: var(--bg-cream);
   border-bottom: 2px solid var(--accent-1);
-  color: var(--bg-dark);
-  font-weight: 700;
-}
-
-/* CELLS */
-.table td {
-  padding: 14px 12px;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-}
-
-/* HOVER */
-.table tr {
-  transition: 0.2s;
-}
-
-.table tr:hover {
-  background: rgba(0,0,0,0.04);
-}
-
-/* PAGAMENTO */
-.pagamento {
+  color: var(--text-strong);
   font-weight: 600;
-  color: var(--accent-1);
+  white-space: nowrap;
 }
 
-/* STATUS */
-.statusEntregue {
-  color: var(--success);
-  font-weight: bold;
+/* Quebra de conteúdo longo */
+.table td:nth-child(2) {
+  white-space: normal;
+  word-break: break-word;
+  max-width: 200px;
 }
 
-.statusPendente {
-  color: var(--danger);
-  font-weight: bold;
+/* Hover */
+.table tr:hover {
+  background-color: var(--bg-light);
 }
 
-/* BUTTON */
+/* Status */
+.statusEntregue { color: var(--green-light); font-weight: bold; }
+.statusPendente { color: var(--red-strong); font-weight: bold; }
+
 .btnStatus {
-  background: var(--accent-1);
-  color: white;
-  padding: 7px 12px;
+  background-color: var(--accent-1);
+  color: var(--text-inverse);
+  padding: 6px 12px;
   border: none;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
+}
+.btnStatus:hover {
+  background-color: var(--accent-2);
+  transform: scale(1.05);
 }
 
-.btnStatus:hover {
-  background: var(--accent-2);
-  transform: scale(1.05);
+@media (max-width: 768px) {
+  .tableWrapper { padding: 0.3rem; }
+  .table th, .table td { padding: 8px 6px; font-size: 0.85rem; }
+
+  .table, .table thead, .table tbody, .table th, .table td, .table tr {
+    display: block;
+  }
+
+  .table thead tr { display: none; }
+
+  .table tr {
+    margin-bottom: 15px;
+    background: var(--bg-light);
+    border-radius: var(--radius);
+    padding: 10px;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .table td {
+    text-align: right;
+    padding-left: 10%;
+    position: relative;
+    white-space: normal;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 12px;
+    width: 45%;
+    padding-right: 10px;
+    font-weight: 600;
+    text-align: left;
+    color: var(--text-strong);
+  }
 }

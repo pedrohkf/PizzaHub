@@ -180,8 +180,9 @@ export default function CardapiosPage() {
 
                 <Carrinho cart={cart} setCart={setCart} />
 
-
-                {/* Cardápios */}
+                <button className={styles.finalizeBtn} onClick={() => setIsModalOpen(true)}>
+                    Finalizar Pedido
+                </button>
                 {userCardapios
                     .filter(c => selectedCardapios.includes(c._id))
                     .map(cardapio =>
@@ -203,9 +204,6 @@ export default function CardapiosPage() {
                             </div>
                         ))
                     )}
-                <button className={styles.finalizeBtn} onClick={() => setIsModalOpen(true)}>
-                    Finalizar Pedido
-                </button>
             </section>
 
             {/* Modal de finalização */}

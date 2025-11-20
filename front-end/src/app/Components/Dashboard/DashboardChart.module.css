@@ -1,9 +1,9 @@
 .card {
-  background: #f8f8f8;
+  background: var(--bg-light);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-soft);
   padding: 25px;
   border-radius: var(--radius);
-  box-shadow: 0 6px 26px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(0, 0, 0, 0.08);
   width: 44rem;
   height: 50vh;
   display: flex;
@@ -21,8 +21,10 @@
 .filtro {
   padding: 8px 14px;
   border-radius: 8px;
-  background: rgb(247, 190, 116);
-  color: rgb(75, 75, 75);
+
+  background: var(--bg-cream);
+  color: var(--text-normal);
+
   border: 1px solid var(--accent-1);
   cursor: pointer;
   transition: .25s ease;
@@ -31,30 +33,30 @@
 
 .filtro:hover {
   background: var(--accent-1);
-  color: white;
+  color: var(--text-inverse);
 }
+
 
 .ativo {
   background: var(--accent-1);
-  color: white;
-  box-shadow: 0 0 10px rgba(255, 120, 0, 0.4);
+  color: var(--text-inverse);
+  box-shadow: 0 0 10px rgba(242, 116, 5, 0.4);
   cursor: default;
   transform: translateY(-1px);
 }
-
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .card {
     width: 100%;
-    max-width: 100%;
-    min-height: auto;
+    height: 80vh;
     padding: 18px;
   }
   
   .chartWrapper {
+    width: 80%;
     height: 300px;
   }
 
-    .filtros {
+  .filtros {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;

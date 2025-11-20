@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styles from "./DasboardStats.module.css"
 
 interface Pedido {
   _id: string;
@@ -71,46 +72,16 @@ export default function DashboardStats({ pizzariaId }: { pizzariaId: string }) {
   }
 
   return (
-    <div style={styles.wrapper}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>Pedidos no mês</h2>
-        <p style={styles.value}>{pedidosMes}</p>
+    <div className={styles.wrapper}>
+      <div className={styles.card}>
+        <h2 className={styles.title}>Pedidos no mês</h2>
+        <p className={styles.value}>{pedidosMes}</p>
       </div>
 
-      <div style={styles.card}>
-        <h2 style={styles.title}>Lucro do mês</h2>
-        <p style={styles.value}>R$ {lucroMes.toFixed(2)}</p>
+      <div className={styles.card}>
+        <h2 className={styles.title}>Lucro do mês</h2>
+        <p className={styles.value}>R$ {lucroMes.toFixed(2)}</p>
       </div>
     </div>
   );
 }
-
-const styles: { [key: string]: React.CSSProperties } = {
-  wrapper: {
-    display: "flex",
-    gap: "20px",
-    marginTop: "20px",
-  },
-
-  card: {
-    flex: 1,
-    background: "white",
-    padding: "25px",
-    borderRadius: "14px",
-    boxShadow: "0 6px 22px rgba(0,0,0,0.15)",
-    border: "1px solid #eee",
-  },
-
-  title: {
-    fontSize: "18px",
-    color: "#444",
-    marginBottom: "10px",
-    fontWeight: 600,
-  },
-
-  value: {
-    fontSize: "32px",
-    fontWeight: "bold",
-    color: "#aa2014",
-  },
-};
