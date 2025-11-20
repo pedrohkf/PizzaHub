@@ -141,7 +141,6 @@ export default function DashboardOrdersChart({ pizzariaId }: Props) {
 
     };
 
-
     return (
         <div className={styles.card}>
             <h2 className={styles.title}>Pedidos - Últimos {intervalo} meses</h2>

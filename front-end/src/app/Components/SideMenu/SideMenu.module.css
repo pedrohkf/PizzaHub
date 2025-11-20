@@ -108,7 +108,7 @@
     fill: var(--text-inverse);
 }
 
-@media (min-width: 510px) {
+@media (min-width: 780px) {
 
     .menuButton {
         display: none;
