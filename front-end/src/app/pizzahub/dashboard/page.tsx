@@ -2,6 +2,9 @@ import SideMenu from "@/app/Components/SideMenu/SideMenu";
 import DashboardStats from "@/app/Components/Dashboard/DashboardStats";
 import { getPizzarias } from "@/app/actions/get-pizzarias";
 import DashboardChart from "@/app/Components/Dashboard/DashboardChart";
+import DashboardOrdersChart from "@/app/Components/Dashboard/DashboardOrdersChart";
+
+import styles from "./Dashboard.module.css"
 
 export default async function Page() {
     const pizzarias = await getPizzarias();
@@ -10,11 +13,14 @@ export default async function Page() {
     return (
         <div style={{ display: "flex" }}>
             <SideMenu />
-            <div style={{ flex: 1, padding: "30px" }}>
+            <div className={styles.container}>
                 <h1 style={{ marginBottom: "20px" }}>Dashboard</h1>
 
                 <DashboardStats pizzariaId={pizzaria._id} />
-                <DashboardChart pizzariaId={pizzaria._id} />
+                <div className={styles.graphs}>
+                    <DashboardChart pizzariaId={pizzaria._id} />
+                    <DashboardOrdersChart pizzariaId={pizzaria._id} />
+                </div>
             </div>
         </div>
     );

@@ -25,10 +25,11 @@ interface Props {
     pizzariaId: string;
 }
 
-export default function DashboardChart({ pizzariaId }: Props) {
+export default function DashboardOrdersChart({ pizzariaId }: Props) {
     const [dados, setDados] = useState<number[]>([]);
     const [labels, setLabels] = useState<string[]>([]);
     const [intervalo, setIntervalo] = useState(12);
+
 
 
     useEffect(() => {
@@ -54,7 +55,8 @@ export default function DashboardChart({ pizzariaId }: Props) {
 
                     if (mesmoMes) {
                         const dia = data.getDate();
-                        faturamentoDiario[dia - 1] += pedido.total;
+                        faturamentoDiario[dia - 1] += 1;
+
                     }
                 });
 
@@ -83,7 +85,7 @@ export default function DashboardChart({ pizzariaId }: Props) {
                     (hoje.getMonth() - dataPedido.getMonth());
 
                 if (diffMeses >= 0 && diffMeses < intervalo) {
-                    faturamentoMensal[intervalo - 1 - diffMeses] += pedido.total;
+                    faturamentoMensal[intervalo - 1 - diffMeses] += 1;
                 }
 
             });
@@ -99,20 +101,17 @@ export default function DashboardChart({ pizzariaId }: Props) {
         labels,
         datasets: [
             {
-                label: "Faturamento (R$)",
+                label: "Quantidade de pedidos",
                 data: dados,
-                borderColor: "var(--accent-1)",
-                backgroundColor: "rgba(255, 122, 0, 0.25)",
+                borderColor: "var(--accent-3)",
+                backgroundColor: "rgba(0, 122, 255, 0.25)",
                 borderWidth: 3,
                 tension: 0.35,
                 pointRadius: 5,
-                pointBackgroundColor: "var(--accent-2)",
-                pointBorderColor: "white",
-                pointBorderWidth: 2,
-                maintainAspectRatio: false,
-            },
-        ],
+            }
+        ]
     };
+
 
     const options = {
         responsive: true,
@@ -144,7 +143,7 @@ export default function DashboardChart({ pizzariaId }: Props) {
 
     return (
         <div className={styles.card}>
-            <h2 className={styles.title}>Faturamento - Últimos {intervalo} meses</h2>
+            <h2 className={styles.title}>Pedidos - Últimos {intervalo} meses</h2>
             <div className={styles.filtros}>
                 <button
                     className={`${styles.filtro} ${intervalo === 1 ? styles.ativo : ""}`}

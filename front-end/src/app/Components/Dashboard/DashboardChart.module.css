@@ -1,26 +1,69 @@
 .card {
-    background: #f8f8f8;
-    padding: 25px;
-    border-radius: var(--radius);
-    box-shadow: 0 6px 26px rgba(0, 0, 0, 0.12);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    margin-top: 35px;
+  background: #f8f8f8;
+  padding: 25px;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 26px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  width: 44rem;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chartWrapper {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 60%;
+}
+
+.filtro {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgb(247, 190, 116);
+  color: rgb(75, 75, 75);
+  border: 1px solid var(--accent-1);
+  cursor: pointer;
+  transition: .25s ease;
+  font-weight: 500;
+}
+
+.filtro:hover {
+  background: var(--accent-1);
+  color: white;
+}
+
+.ativo {
+  background: var(--accent-1);
+  color: white;
+  box-shadow: 0 0 10px rgba(255, 120, 0, 0.4);
+  cursor: default;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+  .card {
     width: 100%;
-    height: 60vh;         /* OBRIGATÓRIO */
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    max-width: 100%;
+    min-height: auto;
+    padding: 18px;
   }
   
   .chartWrapper {
-    flex: 1;              /* faz ocupar todo o espaço restante */
-    position: relative;   
+    height: 300px;
+  }
+
+    .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .filtro {
     width: 100%;
-    height: 80%;         /* garante que o gráfico ficara dentro do card */
+    text-align: center;
+    padding: 10px;
   }
-  
-  .chartWrapper canvas {
-    width: 100% !important;
-    height: 100% !important;  /* gráfico cresce DENTRO do card */
-  }
-  
+}

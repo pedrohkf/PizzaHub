@@ -10,8 +10,6 @@ import { Pizza } from "@/types/Pizza";
 
 type FormaPagamento = "Pix" | "Cartão" | "Dinheiro";
 
-
-
 interface Categoria {
     nome: string;
     pizzas: Pizza[];
@@ -136,18 +134,15 @@ export default function CardapiosPage() {
 
             alert("Pedido finalizado com sucesso!");
 
-            // 6️⃣ Limpar carrinho e modal
             setCart([]);
             setIsModalOpen(false);
 
-            // 7️⃣ Resetar formulário
             setNomeCliente("");
             setEndereco("");
             setTelefone("");
             setCpf("");
             setFormaPagamento("Pix");
 
-            // 8️⃣ Salvar localmente também (opcional)
             const pedidosSalvos = JSON.parse(localStorage.getItem("pedidos") || "[]");
             pedidosSalvos.push(pedido);
             localStorage.setItem("pedidos", JSON.stringify(pedidosSalvos));

@@ -1,0 +1,11 @@
+.container{
+    padding: 3rem 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.graphs {
+    display: flex;
+    column-gap: 2rem;
+}
