@@ -11,6 +11,7 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
+import type { ChartOptions } from "chart.js";
 
 import styles from "./DashboardChart.module.css";
 
@@ -30,7 +31,6 @@ export default function DashboardChart({ pizzariaId }: Props) {
     const [labels, setLabels] = useState<string[]>([]);
     const [intervalo, setIntervalo] = useState(12);
 
-
     useEffect(() => {
         async function carregar() {
             const res = await fetch(
@@ -40,14 +40,12 @@ export default function DashboardChart({ pizzariaId }: Props) {
 
             if (intervalo === 1) {
                 const hoje = new Date();
-
                 const ultimoDia = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0).getDate();
                 const diasLabels = Array.from({ length: ultimoDia }, (_, i) => (i + 1).toString());
                 const faturamentoDiario = Array(ultimoDia).fill(0);
 
                 pedidos.forEach((pedido) => {
                     const data = new Date(pedido.createdAt);
-
                     const mesmoMes =
                         data.getMonth() === hoje.getMonth() &&
                         data.getFullYear() === hoje.getFullYear();
@@ -63,7 +61,6 @@ export default function DashboardChart({ pizzariaId }: Props) {
                 return;
             }
 
-
             const hoje = new Date();
             const faturamentoMensal = Array(intervalo).fill(0);
             const mesesLabels = [];
@@ -75,7 +72,6 @@ export default function DashboardChart({ pizzariaId }: Props) {
                 );
             }
 
-
             pedidos.forEach((pedido) => {
                 const dataPedido = new Date(pedido.createdAt);
                 const diffMeses =
@@ -85,7 +81,6 @@ export default function DashboardChart({ pizzariaId }: Props) {
                 if (diffMeses >= 0 && diffMeses < intervalo) {
                     faturamentoMensal[intervalo - 1 - diffMeses] += pedido.total;
                 }
-
             });
 
             setDados(faturamentoMensal);
@@ -109,38 +104,40 @@ export default function DashboardChart({ pizzariaId }: Props) {
                 pointBackgroundColor: "var(--accent-2)",
                 pointBorderColor: "white",
                 pointBorderWidth: 2,
-                maintainAspectRatio: false,
             },
         ],
     };
 
-    const options = {
+    const options: ChartOptions<"line"> = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: {
                 labels: {
-                    color: "var(--bg-1)",
-                    font: { size: 14, weight: "600" },
+                    color: "var(--accent-1)",
+                    font: {
+                        size: 14,
+                        weight: "bold",
+                    },
                 },
             },
         },
         scales: {
             x: {
-                ticks: { color: "var(--bg-1)" },
+                ticks: { color: "var(--text-normal)" },
                 grid: { color: "rgba(0,0,0,0.05)" },
             },
             y: {
                 beginAtZero: true,
                 ticks: {
-                    color: "var(--bg-1)",
-                    callback: (value: number) => `R$ ${value}`,
+                    color: "var(--text-normal)",
+                    callback: (tickValue: string | number) => `R$ ${Number(tickValue)}`,
                 },
+
                 grid: { color: "rgba(0,0,0,0.05)" },
             },
         },
     };
-
 
     return (
         <div className={styles.card}>
@@ -157,8 +154,9 @@ export default function DashboardChart({ pizzariaId }: Props) {
                     className={`${styles.filtro} ${intervalo === 6 ? styles.ativo : ""}`}
                     onClick={() => setIntervalo(6)}
                 >
-                    Ultimos 6 meses
+                    Últimos 6 meses
                 </button>
+
                 <button
                     className={`${styles.filtro} ${intervalo === 12 ? styles.ativo : ""}`}
                     onClick={() => setIntervalo(12)}
@@ -167,11 +165,9 @@ export default function DashboardChart({ pizzariaId }: Props) {
                 </button>
             </div>
 
-
             <div className={styles.chartWrapper}>
                 <Line data={data} options={options} />
             </div>
         </div>
     );
-
 }

@@ -120,7 +120,7 @@ export default function DashboardOrdersChart({ pizzariaId }: Props) {
             legend: {
                 labels: {
                     color: "var(--bg-1)",
-                    font: { size: 14, weight: "600" },
+                    font: { size: 14, weight: 600 }, // sem aspas
                 },
             },
         },
@@ -133,11 +133,12 @@ export default function DashboardOrdersChart({ pizzariaId }: Props) {
                 beginAtZero: true,
                 ticks: {
                     color: "var(--bg-1)",
-                    callback: (value: number) => `R$ ${value}`,
+                    callback: (tickValue: string | number) => `R$ ${Number(tickValue)}`,
                 },
                 grid: { color: "rgba(0,0,0,0.05)" },
             },
         },
+
     };
 
 
