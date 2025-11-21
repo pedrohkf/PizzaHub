@@ -4,6 +4,8 @@ import { PizzariaFormData } from "@/types/pizzaria";
 import { postPizzaria } from "@/app/actions/post-pizzaria";
 import { useAuth } from "@/context/AuthContext";
 
+import { useRouter } from "next/navigation";
+
 import styles from "./Pizzaria-form.module.css";
 
 
@@ -13,6 +15,7 @@ interface PizzariaFormProps {
 
 export default function PizzariaForm({ onClose }: PizzariaFormProps) {
   const { user } = useAuth();
+  const router = useRouter();
 
   const [formData, setFormData] = useState<PizzariaFormData>({
     name: "",
@@ -58,6 +61,8 @@ export default function PizzariaForm({ onClose }: PizzariaFormProps) {
         methodPay: "dinheiro",
         userId: "",
       });
+
+      router.push("/pizzahub/pizzarias")
     } catch (error: unknown) {
       console.error(error || "Erro ao criar pizzaria.");
     } finally {
@@ -72,7 +77,7 @@ export default function PizzariaForm({ onClose }: PizzariaFormProps) {
           <button
             type="button"
             className={styles.closeBtn}
-            onClick={onClose}
+            onClick={() => router.push("/pizzahub/pizzarias")}
             aria-label="Fechar"
           >
             ×

@@ -112,3 +112,14 @@
     color: var(--text-strong);
   }
 }
+
+@media (max-width: 330px){
+  .list{
+    padding: 2rem 1.3rem;
+  }
+
+  .tableWrapper{
+    padding: 0;
+    width: 15rem;
+  }
+}

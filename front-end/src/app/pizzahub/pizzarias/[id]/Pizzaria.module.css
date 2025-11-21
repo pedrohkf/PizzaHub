@@ -267,41 +267,103 @@
   box-shadow: 0 6px 18px rgba(217, 43, 4, 0.4);
 }
 
-@media (max-width: 1024px) {
-  .pizzasGrid, .galleryGrid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+
+/* === RESPONSIVO === */
+
+/* Tela média */
+@media (max-width: 1000px) {
+  .pizzasGrid,
+  .galleryGrid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 
   .bannerText h1 {
     font-size: 2.2rem;
   }
 
-  .header {
-    padding: 1rem 1.5rem;
+  .bannerText p {
+    font-size: 1.05rem;
   }
 }
 
+/* Tela pequena / mobile */
 @media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    padding: 1rem 1rem;
+  .infoSection,
+  .cardapioPreview,
+  .sobre,
+  .contato {
+    padding: 1rem;
   }
 
-  .nav a {
-    margin-left: 1rem;
-    font-size: 0.9rem;
+  .pizzasGrid,
+  .galleryGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
-  .bannerText {
-    bottom: 10%;
-    left: 5%;
+  .bannerWrapper{
+    height: 30vh;
   }
 
   .bannerText h1 {
     font-size: 1.8rem;
   }
 
-  .pizzasGrid, .galleryGrid {
-    grid-template-columns: 1fr;
+  .bannerText p {
+    font-size: 0.95rem;
+  }
+
+  .header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .logoMenu img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .nav a {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .orderBtn {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .buyBtn {
+    width: 100%;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Tela muito pequena / mobile extremo */
+@media (max-width: 480px) {
+  .bannerText {
+    bottom: 8%;
+    left: 5%;
+  }
+
+  .bannerText h1 {
+    font-size: 1.5rem;
+  }
+
+  .bannerText p {
+    font-size: 0.85rem;
+  }
+
+  .nav a {
+    margin-left: 0.3rem;
+    font-size: 0.8rem;
+  }
+
+  .orderBtn,
+  .buyBtn {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
   }
 }

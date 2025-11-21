@@ -6,16 +6,14 @@ import { useEffect, useState } from 'react'
 import Dashboard from "../../../../public/imgs/Dashboard";
 import Pizzaria from "../../../../public/imgs/Pizzaria";
 import Orders from "../../../../public/imgs/Orders";
-import Help from "../../../../public/imgs/Help";
 import Exit from "../../../../public/imgs/Exit";
-
 import Menu from "../../../../public/imgs/Menu";
+import { ExitAccount } from '@/app/actions/exit-account';
 
 const menuItems = [
     { to: "dashboard", label: "Dashboard", icon: <Dashboard /> },
     { to: "pizzarias", label: "Pizzarias", icon: <Pizzaria /> },
     { to: "pedidos", label: "Pedidos", icon: <Orders /> },
-    { to: "help", label: "Ajuda", icon: <Help /> },
 ];
 
 export default function SideMenu() {
@@ -24,7 +22,7 @@ export default function SideMenu() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
-        const check = () => setIsMobile(window.innerWidth <= 500);
+        const check = () => setIsMobile(window.innerWidth <= 1000);
         check();
 
         window.addEventListener("resize", check);
@@ -67,7 +65,7 @@ export default function SideMenu() {
                     ))}
                 </ul>
 
-                <ul className={styles.exit}>
+                <ul className={styles.exit} onClick={() => ExitAccount()}>
                     <Exit />
                     <li>Sair</li>
                 </ul>

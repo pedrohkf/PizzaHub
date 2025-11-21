@@ -52,8 +52,12 @@
   }
   
   .chartWrapper {
-    width: 80%;
-    height: 300px;
+    width: 90%;
+    height: 30rem;
+  }
+
+  .card{
+    height: 100vh;
   }
 
   .filtros {

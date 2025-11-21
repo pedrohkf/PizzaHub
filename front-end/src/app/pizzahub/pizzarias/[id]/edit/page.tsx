@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import styles from "./edit.module.css";
 import CardapioForm from "@/app/Components/Pizzaria/Cardapio-Form/cardapio";
 import { useAuth } from "@/context/AuthContext";
+import Back from "../../../../../../public/imgs/Back";
 
 // Tipos
 interface Pizza {
@@ -160,6 +161,9 @@ export default function EditPage() {
 
   return (
     <div className={styles.editorPage}>
+      <div className={styles.buttonBack} onClick={() => router.push("/pizzahub/pizzarias")}>
+        <Back />
+      </div>
       <section className={styles.formSection}>
         <h2>Editar Pizzaria</h2>
 

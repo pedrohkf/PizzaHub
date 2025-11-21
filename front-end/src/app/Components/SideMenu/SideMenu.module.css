@@ -1,6 +1,6 @@
 .container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
     font-family: 'Marcellus';
 }
@@ -108,8 +108,7 @@
     fill: var(--text-inverse);
 }
 
-@media (min-width: 780px) {
-
+@media (min-width: 900px) {
     .menuButton {
         display: none;
     }
