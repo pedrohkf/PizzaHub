@@ -8,7 +8,6 @@ import Pizzaria from "../../../../public/imgs/Pizzaria";
 import Orders from "../../../../public/imgs/Orders";
 import Exit from "../../../../public/imgs/Exit";
 import Menu from "../../../../public/imgs/Menu";
-import { ExitAccount } from '@/app/actions/exit-account';
 
 const menuItems = [
     { to: "dashboard", label: "Dashboard", icon: <Dashboard /> },
@@ -35,6 +34,16 @@ export default function SideMenu() {
         setActiveLink(path);
         if (isMobile) setIsMenuOpen(false);
     };
+
+    async function ExitAccount() {
+    await fetch("https://pizza-hub-lime.vercel.app/auth/logout", {
+        method: "POST",
+        credentials: "include"
+    });
+
+    window.location.href = "/auth"; 
+}
+
 
     const shouldShowMenu = isMobile ? isMenuOpen : true;
 

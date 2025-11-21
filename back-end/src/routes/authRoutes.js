@@ -75,23 +75,32 @@ router.get('/user', verifyToken, async (req, res) => {
 })
 
 router.get('/me', verifyToken, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.userId).select('-password'); // remove a senha
-    if (!user) {
-      return res.status(404).json({ message: 'Usuário não encontrado' });
+    try {
+        const user = await User.findById(req.user.userId).select('-password'); // remove a senha
+        if (!user) {
+            return res.status(404).json({ message: 'Usuário não encontrado' });
+        }
+        res.json({ success: true, user });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-    res.json({ success: true, user });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 });
 
 router.post("/logout", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(200);
+    }
+
     res.cookie("token", "", {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        path: "/",         
+        path: "/",
         expires: new Date(0)
     });
 
