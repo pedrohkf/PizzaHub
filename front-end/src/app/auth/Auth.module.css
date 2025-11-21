@@ -1,3 +1,4 @@
+/* Container geral */
 .container {
     display: flex;
     justify-content: center;
@@ -5,6 +6,7 @@
     height: 100vh;
     overflow: hidden;
     background-color: #CCC5BA;
+    position: relative;
 }
 
 .backgroundContent {
@@ -15,9 +17,10 @@
     background-size: cover;
     background-repeat: no-repeat;
     z-index: -1;
-    filter: blur(6) grayscale(10) contrast(1.1);
+    filter: blur(6px) grayscale(10%) contrast(1.1);
 }
 
+/* Conteúdo principal */
 .content {
     display: flex;
     width: 100%;
@@ -26,23 +29,8 @@
     align-items: center;
 }
 
-.forms {
-    width: 50%;
-    height: 100%;
-    z-index: 2;
-}
-
-.formLogin {
-    display: flex;
-    width: 75%;
-    height: 90%;
-    justify-content: center;
-    align-items: center;
-    background-size: cover;
-    background-position: center;
-    box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.432);
-}
-
+/* Formulários gerais */
+.formLogin,
 .formRegister {
     display: flex;
     width: 75%;
@@ -55,6 +43,7 @@
     box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.432);
 }
 
+/* Divisão lado a lado: imagem + formulário */
 .backgroundImg {
     width: 50%;
     height: 100%;
@@ -66,7 +55,7 @@
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.432);
 }
 
-.filter{
+.filter {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -76,35 +65,43 @@
     border-radius: 10px 0 0 10px;
 }
 
+.forms {
+    width: 50%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* Direitos e texto */
 .rights {
     width: 90%;
-    height: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: end;
-    align-items: start;
+    justify-content: flex-end;
+    align-items: flex-start;
     color: #e6e6e6;
     row-gap: 1.5rem;
     border: 1px solid white;
     border-radius: 10px;
+    padding: 1rem;
 }
 
 .rights h3 {
-    font-size: 40px;
+    font-size: 2.5rem;
     font-family: "Playfair";
-    padding: 0 0 0 2rem;
 }
 
 .rights p {
-    font-size: 18px;
+    font-size: 1.2rem;
     font-family: "Marcellus";
-    padding: 0 0 0 2rem;
 }
 
 .details {
     display: flex;
     column-gap: 0.4rem;
-    padding: 0 0 5rem 2rem;
 }
 
 .details div {
@@ -120,11 +117,98 @@
     background-color: rgb(235, 235, 235);
 }
 
+/* -------------------- Media Queries -------------------- */
 
-@media (max-width: 1500px) {
-    .formRegister {
-        display: flex;
-        flex-direction: column;
+/* Tablets e mobile médio */
+@media (max-width: 1024px) {
+    .container {
+        overflow-y: auto;
+        justify-content: flex-start;
         align-items: center;
+        padding: 0;
+    }
+
+    .content {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+    .formLogin,
+    .formRegister {
+        flex-direction: column; /* imagem em cima, formulário embaixo */
+        width: 90%;
+        max-width: 500px;
+        height: auto;
+        margin: 1rem 0;
+        box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.3);
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
+
+    .backgroundImg {
+        width: 100%;
+        height: 180px;
+        border-radius: 10px 10px 0 0;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .filter {
+        border-radius: 10px 10px 0 0;
+    }
+
+    .forms {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .rights {
+        width: 100%;
+        padding: 0.5rem 0;
+        text-align: center;
+        align-items: center;
+    }
+
+    .rights h3 {
+        font-size: 1.5rem;
+    }
+
+    .rights p {
+        font-size: 1rem;
+    }
+
+    .details {
+        padding: 0.5rem 0;
+        justify-content: center;
+    }
+
+    .details div {
+        width: 0.35rem;
+        height: 0.35rem;
+    }
+
+    #detailOne {
+        width: 1.8rem;
+    }
+}
+
+/* Mobile extremo */
+@media (max-width: 480px) {
+    .formLogin,
+    .formRegister {
+        width: 100%;
+    }
+
+    .backgroundImg {
+        height: 150px;
+    }
+
+    .rights h3 {
+        font-size: 1.2rem;
+    }
+
+    .rights p {
+        font-size: 0.85rem;
     }
 }

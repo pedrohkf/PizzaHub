@@ -11,55 +11,58 @@ function FormButton() {
 
     return (
         <div className={styles.buttons}>
-            {pending ? (
-                <Button disabled={pending}>Enviando...</Button>
-            ) : (
-                <Button onClick={() => redirect('pizzahub/dashboard')}>Cadastrar</Button>
-            )}
+            <Button type="submit" disabled={pending}>
+                {pending ? "Enviando..." : "Cadastrar"}
+            </Button>
         </div>
     );
 }
 
-export default function LoginForm({ onSwitch }: { onSwitch: () => void }) {
+
+export default function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
     const [error, setError] = useState<string>();
 
-    const handleSubmit = async (formData: FormData) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault(); // impede reload da página
+        setError(undefined);
+
+        const formData = new FormData(e.currentTarget);
         const email = formData.get('email') as string;
         const password = formData.get('password') as string;
-        const result = await register(formData);
-
 
         if (!email) {
             setError('O campo email é obrigatório.');
-            return
+            return;
         }
 
         if (!password) {
             setError('O campo senha é obrigatório.');
-            return
-        }
-
-        if (!result.success) {
-            setError(result.message);
-            setTimeout(() => setError(""), 7000); 
             return;
         }
 
-        await register(formData);
+        const result = await register(formData);
 
-        redirect('pizzahub/dashboard')
-    }
+        if (!result.success) {
+            setError(result.message);
+            setTimeout(() => setError(""), 7000);
+            return;
+        }
+
+        onSwitch();
+    };
+
 
     return (
-        <form className={styles.formRegister} action={handleSubmit}>
+        <form className={styles.formRegister} onSubmit={handleSubmit}>
             <div className={styles.title}>
                 <h2>Seja bem vindo!</h2>
             </div>
 
             <div className={styles.selection}>
-                <button onClick={onSwitch}>Entrar</button>
-                <button className={styles.btnActived}>Cadastrar</button>
+                <button type="button" onClick={onSwitch}>Entrar</button>
+                <button type="submit" className={styles.btnActived}>Cadastrar</button>
             </div>
+
 
             <div className={styles.inputs}>
                 <div><p>Email</p><input type="email" name="email" placeholder="Insira seu email" /></div>

@@ -6,34 +6,35 @@
     border-radius: 0 10px 10px 0;
     width: 100%;
     height: 100%;
+    padding: 17%;
+    box-sizing: border-box;
 }
 
 .title {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 8rem;
+    margin-top: 2rem;
     row-gap: 1rem;
 }
 
 .title h2 {
-    font-size: 30px;
+    font-size: 2rem;
+    text-align: center;
 }
-
 
 .selection {
     display: flex;
-    width: 70%;
-    height: 2.1rem;
+    width: 100%;
+    height: 2.5rem;
     border-radius: 50px;
     box-shadow: 0 0 2px #838383;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 }
 
 .selection button {
-    width: 50%;
-    height: 1.7rem;
-    font-size: 12px;
+    flex: 1;
+    font-size: 0.9rem;
     border-radius: 50px;
     margin: 0.2rem;
     border: none;
@@ -48,141 +49,85 @@
 .inputs {
     display: flex;
     flex-direction: column;
-    width: 70%;
-    height: 30vh;
+    width: 100%;
+    margin-top: 2rem;
     row-gap: 1rem;
-    padding-top: 2rem;
 }
 
 .inputs input {
     width: 100%;
     height: 2.2rem;
-    padding-left: 1.5rem;
+    padding-left: 1rem;
     border-radius: 50px;
-    background-color: rgba(255, 255, 255, 0.329);
-    margin-top: 1rem;
-    font-size: 13px;
+    background-color: rgba(255, 255, 255, 0.33);
+    font-size: 0.9rem;
     border: 1px solid rgb(184, 182, 182);
+    box-sizing: border-box;
 }
 
 .buttons {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 65%;
-    height: 2.5rem;
-    font-size: 14px;
+    width: 100%;
+    margin-top: 1.5rem;
 }
 
-.buttons button{
+.buttons button {
     background-color: #AB2015;
     color: #ED931A;
     border: none;
     width: 100%;
-    height: 100%;
+    height: 2.5rem;
     border-radius: 50px;
     cursor: pointer;
 }
 
-
-.message {
-    height: 2rem;
-    background-color: rgb(29, 250, 165);
-}
-
 .errorMessage {
     color: rgb(252, 113, 113);
-    font-size: 16px;
-    font-family: "Marcellus";
-    margin-top: 0.5rem;
+    font-size: 1rem;
     text-align: center;
+    margin-top: 0.5rem;
     font-weight: 600;
 }
 
-
-@media (max-width: 650px) {
-    .forms {
-        width: 23rem;
-        height: 55vh;
-    }
-
-    .title {
-        text-align: center;
-        padding: 0;
-    }
-}
-
+/* Media Queries */
 @media (max-width: 550px) {
+    .formRegister {
+        width: 95%;
+        padding: 1.5rem;
+    }
 
-    .forms {
-        width: 25rem;
-        height: 70vh;
-        row-gap: 1.5rem;
+    .title h2 {
+        font-size: 1.5rem;
+    }
+
+    .inputs input {
+        height: 2rem;
+        font-size: 0.85rem;
+    }
+
+    .selection {
+        height: 2rem;
     }
 }
 
-@media (max-width: 430px) {
-    .forms {
-        width: 19rem;
-        height: 55vh;
-        row-gap: 1rem;
+@media (max-width: 400px) {
+    .formRegister {
+        padding: 1rem;
     }
 
-    .forms input {
-        width: 16rem;
+    .inputs input, .selection button, .buttons button {
+        font-size: 0.8rem;
     }
 
-    .forms button {
-        width: 16rem;
-        height: 2.5rem;
-    }
-}
-
-@media (max-width: 390px) {
-    .forms {
-        width: 18rem;
-        height: 63vh;
-        row-gap: 0.5rem;
-    }
-
-    .forms .title {
-        font-size: 40px;
-    }
-
-    .forms input {
-        width: 15rem;
-    }
-
-    .forms button {
-        width: 15rem;
-        height: 2.5rem;
-    }
-}
-
-@media (max-width: 350px) {
-    .forms {
-        height: 45vh;
-    }
-}
-
-@media (max-height: 800px) {
-    .forms {
-        width: 26rem;
-        row-gap: 1rem;
+    .inputs {
+        row-gap: 0.8rem;
     }
 }
 
 @media (max-height: 600px) {
-    .forms {
-        width: 24rem;
-        height: 75vh;
-        row-gap: 1.3rem;
-    }
-}
-
-@media (max-height: 500px) {
-    .forms {
-        row-gap: 0rem;
-        width: 17rem;
+    .formRegister {
+        height: 80%;
     }
 }

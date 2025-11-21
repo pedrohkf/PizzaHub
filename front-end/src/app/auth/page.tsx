@@ -5,39 +5,17 @@ import RegisterForm from "../Components/Register/register-form";
 import styles from "./Auth.module.css";
 
 export default function Page() {
-    const [mode, setMode] = useState<"login" | "register" | "initial">("register");
+    const [mode, setMode] = useState<"login" | "register">("login");
 
     return (
         <div className={styles.container}>
             <div className={styles.backgroundContent}></div>
 
             <div className={styles.content}>
-                {mode === "initial" && (
-                    <div
-                        key="login"
-                        className={styles.formLogin}
-                    >
-                        <div
-                            className={styles.forms}>
-                            <LoginForm onSwitch={() => setMode("register")} />
-                        </div>
-
-                        <div
-                            key={mode === "initial" ? "bg-initial" : "bg-initial"}
-                            className={styles.backgroundImg}
-                        >
-                            <div
-                                className={styles.rights}>
-                                <h3>seu sonho, nossa criação</h3>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
                 {mode === "login" && (
                     <div
-                        key="register"
-                        className={styles.formLogin}
+                        key="login"
+                        className={styles.formRegister}
                     >
                         <div
                             key={mode === "login" ? "bg-login" : "bg-register"}

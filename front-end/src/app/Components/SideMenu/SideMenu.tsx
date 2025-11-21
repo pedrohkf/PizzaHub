@@ -40,8 +40,6 @@ export default function SideMenu() {
         method: "POST",
         credentials: "include"
     });
-
-    window.location.href = "/auth"; 
 }
 
 
