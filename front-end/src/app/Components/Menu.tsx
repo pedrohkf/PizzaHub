@@ -25,11 +25,10 @@ export default function Menu() {
                 <p>Como funciona</p>
                 <p>Planos</p>
                 <p>Sobre nós</p>
-            </div>
-            <div className={styles.suporte}>
                 <a href="/auth"><button>Entrar</button></a>
                 <a href="/auth"><button>Começar</button></a>
             </div>
+
         </div>
     )
 }
